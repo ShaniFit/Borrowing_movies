@@ -11,6 +11,7 @@ public class Controller extends DBimport{
 
     @FXML
     void byClick(ActionEvent event) {
+        exportUser();
 //        insertToTable(firstName.getText(),firstName.getText());
     }
 

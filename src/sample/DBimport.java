@@ -78,24 +78,71 @@ public class DBimport {
     /*
      *The next export funcion export from the dataBase the data
      * */
-    ////The exoprt functions still not working so don't use them.////
-    public void exportReview(int reviewID, int userID, int movieID){
+    public void exportReview(){
         try {
+            //insert the data into resultSet object
             resultSet = statement.executeQuery("select * from review");
 
+            //print from the resultSet object to the app
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("reviewID") + " " + resultSet.getString("text"));
+                System.out.println(resultSet.getString("reviewID") + " " + resultSet.getString("MovieID")
+                        +""+resultSet.getString("Rating") + " " +resultSet.getString("Text")
+                        + " " +resultSet.getString("UserID"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void exportUser(int id){
+    public void exportUser(){
+        try {
+            resultSet = statement.executeQuery("select * from user");
 
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("ID") + " " + resultSet.getString("usename")
+                +""+resultSet.getString("passward") + " " +resultSet.getString("isAdmin"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    public void exportOrder(int orderID, int userID){}
-    public void exportMovie(int movieID, int categoryID){}
-    public void exportCategory(int categoryID){}
+    public void exportOrder(){
+        try {
+            resultSet = statement.executeQuery("select * from order");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("OrderID") + " " + resultSet.getString("Date")
+                        +""+resultSet.getString("MovieID") + " " +resultSet.getString("TotalPrice")
+                        + " " +resultSet.getString("UserID"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void exportMovie(int movieID, int categoryID){
+        try {
+            resultSet = statement.executeQuery("select * from movie");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("MovieID") + " " + resultSet.getString("CategoryID")
+                        +" "+resultSet.getString("Description") + " " +resultSet.getString("Duration")
+                        + " " +resultSet.getString("IsAvailable")+""+resultSet.getString("MovieTitle")
+                        + " " +resultSet.getString("ReleaseDate"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void exportCategory(int categoryID){
+        try {
+            resultSet = statement.executeQuery("select * from category");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("CategoryID") + " " + resultSet.getString("CategoryName"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /*
     *when the app closed we have to use this function.
