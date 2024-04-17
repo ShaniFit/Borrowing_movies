@@ -1,11 +1,13 @@
-package src.view.user;
-        
+package com.example.rateMovies;
+
+import dataobjects.Review;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
 
 public class MovieReviewApp extends Application {
 
@@ -22,21 +24,7 @@ public class MovieReviewApp extends Application {
 
         // Rating Input
         Label ratingLabel = new Label("Rate the movie:");
-        HBox ratingBox = new HBox(5);
-        System.out.println(ratingBox.getCssMetaData());
-        ToggleGroup ratingGroup = new ToggleGroup();
-        for (int i = 1; i <= 5; i++) {
-            ToggleButton starButton = new ToggleButton();
-            starButton.setId("star-button");
-            final int rating = i;
-            starButton.setOnAction(event -> {
-                if (starButton.isSelected()) {
-                    System.out.println("Rated: " + rating);
-                } else {
-                    System.out.println("Unrated: " + rating);
-                }
-            });
-        }
+        Stars ratingBox = new Stars();
 
         // Review Input
         TextArea reviewTextArea = new TextArea();
@@ -45,15 +33,16 @@ public class MovieReviewApp extends Application {
         // Submit Button
         Button submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
-            ToggleButton selectedButton = (ToggleButton) ratingGroup.getSelectedToggle();
-            String rating = selectedButton != null ? String.valueOf(ratingGroup.getToggles().indexOf(selectedButton) + 1) : "N/A";
+            int rating = ratingBox.getRating();
             String review = reviewTextArea.getText();
 
             if (!review.isEmpty()) {
+                Review newReview = new Review("Avengers: Endgame", rating, review);
+                newReview.savereviewtoDB();
                 String fullReview = "Movie: Avengers: Endgame\nRating: " + rating + "/5\n" + review;
                 System.out.println(fullReview); // For demo, print the review to console
                 reviewTextArea.clear();
-                ratingGroup.selectToggle(null); // Clear selected rating
+                ratingBox.setRating(0); // Clear selected rating
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Incomplete Fields");
@@ -68,11 +57,9 @@ public class MovieReviewApp extends Application {
 
         // Scene
         Scene scene = new Scene(layout, 400, 300);
-//        scene.getStylesheets().add(getClass().getResource("src/view/user/styles.css").toExternalForm()); // Load CSS file
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
     public static void main(String[] args) {
         launch(args);
     }

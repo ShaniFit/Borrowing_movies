@@ -1,9 +1,0 @@
-.star-button {
-    -fx-background-image: url("/star-empty.png");
-    -fx-background-size: contain;
-}
-
-.star-button:selected {
-    -fx-background-image: url("/star-filled.png");
-    -fx-background-size: contain;
-}

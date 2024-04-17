@@ -1,4 +1,5 @@
-package src.dataobj;
+package dataobjects;
+
 
 public class Review {
     int rateId;
@@ -14,6 +15,12 @@ public class Review {
         this.movieId = movieId;
         this.userId = userId;
         this.rateId = idCounter++;
+    }
+
+    public Review(String s, int rating, String review) {
+        rate = rating;
+        this.review = review;
+
     }
 
     public int getRate(){
