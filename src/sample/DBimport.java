@@ -18,15 +18,57 @@ public class DBimport {
             e.printStackTrace();
         }
     }
-    public void printDB() {
+    /*
+     * Those delete funcion, delete data depend the pramery and forigens Keys and deleting them from the dataBase
+     * */
+    public void deleteUser(int id){
         try {
-            resultSet = statement.executeQuery("select * from user");
-
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("id") + " " + resultSet.getString("username"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            PreparedStatement st = connection.prepareStatement("DELETE FROM user WHERE ID = ?");
+            st.setInt(1,id);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteReview(int reviewID,int movieID, int userID){
+        try {
+            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE ReviewID = ? AND MovieID = ? AND UserID = ?;");
+            st.setInt(1,reviewID);
+            st.setInt(2,movieID);
+            st.setInt(3,userID);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteOreder(int orderID,int movieID,int userID){
+        try {
+            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE OrderID = ? AND MovieID = ? AND UserID = ?;");
+            st.setInt(1,orderID);
+            st.setInt(2,movieID);
+            st.setInt(3,userID);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteMovie(int movieID, int categoryID){
+        try {
+            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE MovieID = ? AND categoryID = ?;");
+            st.setInt(1,movieID);
+            st.setInt(2,categoryID);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteCategory(int categoryID){
+        try {
+            PreparedStatement st = connection.prepareStatement("DELETE FROM user WHERE CategoryID = ?");
+            st.setInt(1,categoryID);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
         }
     }
     /*
@@ -78,24 +120,72 @@ public class DBimport {
     /*
      *The next export funcion export from the dataBase the data
      * */
-    ////The exoprt functions still not working so don't use them.////
-    public void exportReview(int reviewID, int userID, int movieID){
+    public void exportReview(){
         try {
+            //insert the data into resultSet object
             resultSet = statement.executeQuery("select * from review");
 
+            //print from the resultSet object to the app
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("reviewID") + " " + resultSet.getString("text"));
+                System.out.println(resultSet.getString("reviewID") + " " + resultSet.getString("MovieID")
+                        +""+resultSet.getString("Rating") + " " +resultSet.getString("Text")
+                        + " " +resultSet.getString("UserID"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void exportUser(int id){
+    public void exportUser(){
+        try {
+            resultSet = statement.executeQuery("select * from user");
 
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("ID") + " " + resultSet.getString("usename")
+                +""+resultSet.getString("passward") + " " +resultSet.getString("isAdmin"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    public void exportOrder(int orderID, int userID){}
-    public void exportMovie(int movieID, int categoryID){}
-    public void exportCategory(int categoryID){}
+    public void exportOrder(){
+        try {
+            resultSet = statement.executeQuery("select * from order");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("OrderID") + " " + resultSet.getString("Date")
+                        +""+resultSet.getString("MovieID") + " " +resultSet.getString("TotalPrice")
+                        + " " +resultSet.getString("UserID"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void exportMovie(int movieID, int categoryID){
+        try {
+            resultSet = statement.executeQuery("select * from movie");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("MovieID") + " " + resultSet.getString("CategoryID")
+                        +" "+resultSet.getString("Description") + " " +resultSet.getString("Duration")
+                        + " " +resultSet.getString("IsAvailable")+""+resultSet.getString("MovieTitle")
+                        + " " +resultSet.getString("ReleaseDate"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void exportCategory(int categoryID){
+        try {
+            resultSet = statement.executeQuery("select * from category");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("CategoryID") + " " + resultSet.getString("CategoryName"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /*
     *when the app closed we have to use this function.
