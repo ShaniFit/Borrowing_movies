@@ -18,15 +18,57 @@ public class DBimport {
             e.printStackTrace();
         }
     }
-    public void printDB() {
+    /*
+     * Those delete funcion, delete data depend the pramery and forigens Keys and deleting them from the dataBase
+     * */
+    public void deleteUser(int id){
         try {
-            resultSet = statement.executeQuery("select * from user");
-
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("id") + " " + resultSet.getString("username"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            PreparedStatement st = connection.prepareStatement("DELETE FROM user WHERE ID = ?");
+            st.setInt(1,id);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteReview(int reviewID,int movieID, int userID){
+        try {
+            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE ReviewID = ? AND MovieID = ? AND UserID = ?;");
+            st.setInt(1,reviewID);
+            st.setInt(2,movieID);
+            st.setInt(3,userID);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteOreder(int orderID,int movieID,int userID){
+        try {
+            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE OrderID = ? AND MovieID = ? AND UserID = ?;");
+            st.setInt(1,orderID);
+            st.setInt(2,movieID);
+            st.setInt(3,userID);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteMovie(int movieID, int categoryID){
+        try {
+            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE MovieID = ? AND categoryID = ?;");
+            st.setInt(1,movieID);
+            st.setInt(2,categoryID);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteCategory(int categoryID){
+        try {
+            PreparedStatement st = connection.prepareStatement("DELETE FROM user WHERE CategoryID = ?");
+            st.setInt(1,categoryID);
+            st.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
         }
     }
     /*
@@ -143,6 +185,7 @@ public class DBimport {
             e.printStackTrace();
         }
     }
+
 
     /*
     *when the app closed we have to use this function.
