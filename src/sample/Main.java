@@ -3,23 +3,31 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Objects;
+
+
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+    public void start(Stage stage) throws Exception{
+        FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(sample.Main.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 460, 400);
+        stage.setTitle("Movie Rent");
+        stage.setScene(scene);
+        stage.show();
     }
 
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
+        String email= "";
     }
 
 }

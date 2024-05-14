@@ -82,13 +82,13 @@ public class DBimport {
             e.printStackTrace();
         }
     }
-    public void insertNewUser(int id, String userName, String passward, int userID, boolean isAdmin) {
+    public void insertNewUser(int id, String userName, String passward, int isAdmin) {
         try {
-            statement.executeUpdate("INSERT INTO user " + "VALUES ('"+id+"','"+userName+"','"+passward+"','"+userID+"','"+isAdmin+"')");
-            System.out.println("add successfully");
+            statement.executeUpdate("INSERT INTO user " + "VALUES ('"+id+"','"+userName+"','"+passward+"','"+isAdmin+"')");
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("add successfully");
     }
     public void insertNewOrder(int orderID, int totalPrice, String date, int userID, int movieID) {
         try {

@@ -5,23 +5,26 @@ public class User extends DBimport {
     private String userName;
     private String passward;
     private int userID;
-    private boolean isAdmin;
+    private int isAdmin;
 
-    public User(int id, String userName, String passward, int userID, boolean isAdmin) {
+    public User()
+    {
+
+    }
+    public User(int id, String userName, String passward, int isAdmin) {
         this.id = id;
         this.userName = userName;
         this.passward = passward;
-        this.userID = userID;
         this.isAdmin = isAdmin;
     }
     public void newUser()
     {
         try {
-            insertNewUser(id,  userName,  passward,  userID,  isAdmin);
-            System.out.println("add successfully");
+            insertNewUser(id,  userName,  passward,  isAdmin);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("add successfully");
     }
     public int getId() {
         return id;
@@ -47,19 +50,13 @@ public class User extends DBimport {
         this.passward = passward;
     }
 
-    public int getUserID() {
-        return userID;
-    }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
 
-    public boolean isAdmin() {
+    public int isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(int admin) {
         isAdmin = admin;
     }
 }
