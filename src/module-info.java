@@ -6,4 +6,6 @@ module sample {
 
     opens sample to javafx.fxml;
     exports sample;
+    exports sample.db;
+    opens sample.db to javafx.fxml;
 }

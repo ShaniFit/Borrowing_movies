@@ -1,4 +1,4 @@
-package sample;
+package sample.db;
 
 public class Category extends DBimport {
     private int categoryID;

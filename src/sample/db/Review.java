@@ -1,6 +1,4 @@
-package sample;
-
-import java.sql.*;
+package sample.db;
 
 public class Review extends DBimport {
 

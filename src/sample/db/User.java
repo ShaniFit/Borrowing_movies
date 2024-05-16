@@ -1,23 +1,33 @@
-package sample;
+package sample.db;
 
 public class User extends DBimport {
+    // TODO: change user to work with mail maybe instead of username
     private int id;
     private String userName;
     private String passward;
-    private int userID;
     private int isAdmin;
+
+    static int idCounter = 0;
 
     public User()
     {
 
     }
     public User(int id, String userName, String passward, int isAdmin) {
-        this.id = id;
+        this.id = idCounter++;
         this.userName = userName;
         this.passward = passward;
         this.isAdmin = isAdmin;
     }
-    public void newUser()
+
+    protected static User login(String username, String password) {
+        // TODO: Implement this method
+        // if user exist in db and password is correct, return the user
+        // else return null
+        return  null;
+    }
+
+    public void addNewUserInDB()
     {
         try {
             insertNewUser(id,  userName,  passward,  isAdmin);
@@ -49,7 +59,6 @@ public class User extends DBimport {
     public void setPassward(String passward) {
         this.passward = passward;
     }
-
 
 
     public int isAdmin() {

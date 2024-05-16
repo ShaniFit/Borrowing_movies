@@ -1,7 +1,7 @@
-package sample;
-import java.sql.*;
+package sample.db;
 
 import java.sql.*;
+
 
 public class DBimport {
     private Statement statement;
