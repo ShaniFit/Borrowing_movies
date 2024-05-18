@@ -1,6 +1,4 @@
-package sample;
-
-import java.sql.*;
+package sample.db;
 
 public class Review extends DBimport {
 
@@ -64,5 +62,12 @@ public class Review extends DBimport {
 
     public void setMovieID(int movieID) {
         this.movieID = movieID;
+    }
+
+    public void getReviewByMoovie(int movieID) {
+        // TODO: Implement this method
+        // return the review of the movie
+        exportSpesificReview(movieID)//printing all the moviesID's reviews
+        return null;
     }
 }
