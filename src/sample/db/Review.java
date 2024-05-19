@@ -65,7 +65,6 @@ public class Review extends DBimport {
     }
 
     public void getReviewByMoovie(int movieID) {
-        // TODO: Implement this method
         // return the review of the movie
         exportSpesificReview(movieID)//printing all the moviesID's reviews
         return null;
