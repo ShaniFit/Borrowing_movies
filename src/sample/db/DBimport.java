@@ -135,6 +135,26 @@ public class DBimport {
             e.printStackTrace();
         }
     }
+
+    public void exportSpesificReview(int movieID){
+        try {
+            //Exporting the data by movieID
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE MovieID = ?");
+            statement.setString(1, movieID); // Set the value for the first placeholder to the value of the userName variable
+
+            resultSet = statement.executeQuery();
+
+            //print all the movieID's reviews
+            while (resultSet.next()) {
+                if (resultSet.next())
+                System.out.println(resultSet.getString("reviewID") + " " + resultSet.getString("MovieID")
+                        +""+resultSet.getString("Rating") + " " +resultSet.getString("Text")
+                        + " " +resultSet.getString("UserID"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void exportUser(){
         try {
             resultSet = statement.executeQuery("select * from user");
@@ -147,6 +167,22 @@ public class DBimport {
             e.printStackTrace();
         }
     }
+    public boolean checkUserExist(String userName, String passward){
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE username = ? AND password = ?");
+            statement.setString(1, userName); // Set the value for the first placeholder to the value of the userName variable
+            statement.setString(2, password); // Set the value for the second placeholder to the value of the password variable
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next() != null)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void exportOrder(){
         try {
             resultSet = statement.executeQuery("select * from order");

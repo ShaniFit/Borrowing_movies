@@ -63,10 +63,9 @@ public class Review extends DBimport {
     public void setMovieID(int movieID) {
         this.movieID = movieID;
     }
-
-    public Review getReviewByMoovie(int movieID) {
-        // TODO: Implement this method
+    public void getReviewByMoovie(int movieID) {
         // return the review of the movie
+        exportSpesificReview(movieID)//printing all the moviesID's reviews
         return null;
     }
 }
