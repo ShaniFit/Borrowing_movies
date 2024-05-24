@@ -6,7 +6,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+
 public class HelloController{
+
+    protected static Boolean isAdmin;
 
     @FXML
     private TextField emailField;
@@ -37,7 +40,7 @@ public class HelloController{
             showAlert("Password", "Please enter matching passwords");
             repeatPassword.clear();
         }
-        if (!isValidEmail(email)){
+        if (!isValidEmail(email)) {
             showAlert("Invalid Email", "Please enter a valid email address.");
             emailField.clear();
         }
@@ -59,5 +62,17 @@ public class HelloController{
     void pressLogin(ActionEvent event) {
         String username = usernameLogin.getText();
         String password = passwordLogin.getText();
+        isAdmin=false;
+        handleNextScreenButton("mainPage.fxml");
     }
+    protected void handleNextScreenButton(String fxml) {
+        try {
+            HelloApplication.loadScene(fxml);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
