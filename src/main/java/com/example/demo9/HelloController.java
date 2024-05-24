@@ -2,11 +2,18 @@ package com.example.demo9;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import java.util.Objects;
 
 public class HelloController{
+
+    protected static Boolean isAdmin;
 
     @FXML
     private TextField emailField;
@@ -41,6 +48,7 @@ public class HelloController{
             showAlert("Invalid Email", "Please enter a valid email address.");
             emailField.clear();
         }
+        //continueMoviePage("mainPage.fxml", 800, 600);
     }
 
     private boolean isValidEmail(String email) {
@@ -59,5 +67,31 @@ public class HelloController{
     void pressLogin(ActionEvent event) {
         String username = usernameLogin.getText();
         String password = passwordLogin.getText();
+        isAdmin=false;
+       // continueMoviePage("mainPage.fxml", 800, 600);
+        handleNextScreenButton("mainPage.fxml");
     }
+    protected void handleNextScreenButton(String fxml) {
+        try {
+            HelloApplication.loadScene(fxml);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void continueMoviePage(String string, int x, int y){
+        try{
+   FXMLLoader.load(Objects.requireNonNull(getClass().getResource(string)));
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(string));
+            Scene scene = new Scene(fxmlLoader.load(), x, y);
+            Stage mainStage= new Stage();
+            mainStage.setScene(scene);
+            mainStage.show();
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+
 }

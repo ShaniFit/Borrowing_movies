@@ -34,7 +34,7 @@
             <PasswordField fx:id="repeatPassword" layoutX="112.0" layoutY="104.0" />
          </children>
       </AnchorPane>
-      <Text fill="#f4f2f2" layoutX="11.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home | Register | Login |Search">
+      <Text fill="#f4f2f2" layoutX="11.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home |                            |Search">
          <font>
             <Font size="10.0" />
          </font>
@@ -44,5 +44,10 @@
             <Image url="@OIG2%20(3).jpeg" />
          </image>
       </ImageView>
+      <Text fill="#f4f2f2" layoutX="41.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Register | Login">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
