@@ -20,11 +20,14 @@ public class User extends DBimport {
         this.isAdmin = isAdmin;
     }
 
-    protected static User login(String username, String password) {
-        // TODO: Implement this method
-        // if user exist in db and password is correct, return the user
-        // else return null
-        return  null;
+    protected static boolean User_login(String username, String password) {
+        if (checkUserExist(username, password)){//check if user exist return true
+            //type some code
+            return true;
+        }
+        else{//user not exist
+            return false;
+        }
     }
 
     public void addNewUserInDB()
