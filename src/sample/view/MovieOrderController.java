@@ -1,4 +1,4 @@
-package com.example.demo9;
+package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,8 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import sample.db.Movie;
 
 public class MovieOrderController extends HelloController {
+
+    private int movieId;
 
     @FXML
     private Label categoryLabel;
@@ -17,6 +20,9 @@ public class MovieOrderController extends HelloController {
 
     @FXML
     private Label dateLabel;
+
+    @FXML
+    private Label priceLabel;
 
     @FXML
     private Label directorLabel;
@@ -50,7 +56,8 @@ public class MovieOrderController extends HelloController {
 
     @FXML
     void orderPress(ActionEvent event) {
-
+        Movie movie = Movie.getMovieById(movieId);
+        movie.orderMovie(dateLabel.getText());
     }
     @FXML
     void removePress(ActionEvent event) {
@@ -59,16 +66,20 @@ public class MovieOrderController extends HelloController {
 
     @FXML
     void reviewPress(ActionEvent event) {
-        handleNextScreenButton("reviewPage.fxml");
+
+        handleNextScreenButton("resources/reviewPage.fxml");
     }
 
     public void initialize(){
+        // TODO - load movie details from last screen (id)
+        movieId = 1;
+        Movie movie = Movie.getMovieById(movieId);
+        // TODO - load movie details into fxml
         if(isAdmin){
             order.setVisible(false);
             orderButton.setVisible(false);
             reviewButton.setVisible(false);
             reviewText.setVisible(false);
-
         }
         else{
             remove.setVisible(false);

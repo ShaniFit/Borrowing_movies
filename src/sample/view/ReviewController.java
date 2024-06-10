@@ -1,4 +1,4 @@
-package com.example.demo9;
+package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,9 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ToggleGroup;
+import sample.db.Movie;
+import sample.db.Review;
 
 
-public class ReviewController {
+public class ReviewController extends HelloController {
 
     @FXML
     private Label categoryLabel;
@@ -40,28 +42,43 @@ public class ReviewController {
     @FXML
     private RadioButton rate5;
 
+    private int rate = 0;
+
     @FXML
     private Label titleLabel;
 
+    void setMovieReview(){
+        // use given movieID
+        Review review = new Review(-1,rate, "This movie is great", currentUser.getId(), selectedMovie.getMovieID());
+        review.addReviewToDB();
+    }
+
     @FXML
     void handleRating(ActionEvent event) {
-        if(rate2.isSelected()){
+        if (rate1.isSelected()){
+            rate = 1;
+        }
+        else if(rate2.isSelected()){
             rate1.setSelected(true);
+            rate = 2;
         }
         else if(rate3.isSelected()){
             rate1.setSelected(true);
             rate2.setSelected(true);
+            rate = 3;
         }
         else if(rate4.isSelected()){
             rate1.setSelected(true);
             rate2.setSelected(true);
             rate3.setSelected(true);
+            rate = 4;
         }
         else if(rate5.isSelected()){
             rate1.setSelected(true);
             rate2.setSelected(true);
             rate3.setSelected(true);
             rate4.setSelected(true);
+            rate = 5;
         }
     }
 

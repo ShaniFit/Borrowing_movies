@@ -1,4 +1,4 @@
-package com.example.demo9;
+package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,16 +8,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sample.db.Movie;
 
 import java.io.File;
 
 public class AddMovieController {
-
+// TODO - remove form fxml the director field
     @FXML
     private TextField addCategory;
-
-    @FXML
-    private TextField addDirector;
 
     @FXML
     private TextField addDuration;
@@ -51,7 +49,16 @@ public class AddMovieController {
 
     @FXML
     void pressSubmit(ActionEvent event) {
-
+        String category = addCategory.getText();
+        String duration = addDuration.getText();
+        String price = addPrice.getText();
+        String releaseDate = addReleaseDate.getText();
+        String title = addTitle.getText();
+        Movie movie = new Movie(-1,
+                title, "", releaseDate, Integer.parseInt(duration), Integer.parseInt(category), true,
+                Integer.parseInt(price));
+        movie.addMovieToDB();
+        // TODO - UI - pass to the main page
     }
 
 }

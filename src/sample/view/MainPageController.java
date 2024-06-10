@@ -1,4 +1,4 @@
-package com.example.demo9;
+package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +12,10 @@ import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import sample.db.Movie;
+import sample.db.User;
 
 
 public class MainPageController  extends HelloController implements Initializable {
@@ -122,27 +123,54 @@ public class MainPageController  extends HelloController implements Initializabl
     @FXML
     private Button viewOrders;
 
+    void loadMovies() {
+        // Load the movies from the database and display them in movie1, movie2, ..., movie8.
+        // For each movie, set the title, category, and image.
+        // If there are fewer than 8 movies, hide the remaining movie panes.
+        // get user choice
+        String choice = choiceAll.getValue();
+        Movie[] movies;
+        switch (choice) {
+        case "Title":
+            movies = Movie.loadAvailableMoviesByTitle(searchWord.getText());
+        case "Category":
+            movies = Movie.loadAvailableMoviesByCategory(searchWord.getText());
+        case "Duration":
+            movies = Movie.loadAvailableMoviesByDuration(Integer.parseInt(searchWord.getText()));
+        default:
+            movies = Movie.loadAvailableMovies();}
+        // TODO - UI - Load the movies into the UI - 8 movies
+        for (int i = 0; i < movies.length; i++) {
+            AnchorPane movie = (AnchorPane) movie2.getParent().getChildrenUnmodifiable().get(i);
+            ImageView image = (ImageView) movie.getChildren().get(0);
+            Label title = (Label) movie.getChildren().get(1);
+            Label category = (Label) movie.getChildren().get(2);
+            image.setImage(movies[i].getImage());
+            title.setText(movies[i].getMovieTitle());
+            category.setText(movies[i].getCategory());
+        }
+    }
+
     @FXML
     void pressViewOrders(ActionEvent event) {
-        handleNextScreenButton("ordersView.fxml");
-
+        handleNextScreenButton("resources/ordersView.fxml");
     }
 
     @FXML
     void pressAddMovie(ActionEvent event) {
-        handleNextScreenButton("addMovie.fxml");
+        handleNextScreenButton("resources/addMovie.fxml");
     }
 
     @FXML
     private void searchButton(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
                 String text = searchWord.getText();
-                handleNextScreenButton("movieSearch.fxml");
+                handleNextScreenButton("resources/movieSearch.fxml");
             }
     }
     @FXML
     void enterMovie(MouseEvent event) {
-        handleNextScreenButton("movieSearch.fxml");
+        handleNextScreenButton("resources/movieSearch.fxml");
     }
 
     private String[] choice={"Title","Category","Duration"};

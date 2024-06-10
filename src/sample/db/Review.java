@@ -65,7 +65,16 @@ public class Review extends DBimport {
     }
     public void getReviewByMoovie(int movieID) {
         // return the review of the movie
-        exportSpesificReview(movieID)//printing all the moviesID's reviews
-        return null;
+        exportSpesificReview(movieID); //printing all the moviesID's reviews
+        return ;
+    }
+
+    public void addReviewToDB() {
+        try {
+            insertNewReview(reviewID, rating, text, userID, movieID);
+            System.out.println("add successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

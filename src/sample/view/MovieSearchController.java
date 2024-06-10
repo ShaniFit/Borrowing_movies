@@ -1,10 +1,11 @@
-package com.example.demo9;
+package sample.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import sample.db.Movie;
 
 public class MovieSearchController extends HelloController{
 
@@ -58,7 +59,9 @@ public class MovieSearchController extends HelloController{
 
     @FXML
     void enterMovie(MouseEvent event) {
-        handleNextScreenButton("movieOrder.fxml");
+        // TODO - pass id to the next screen instead of 1
+        selectedMovie = Movie.getMovieById(1);
+        handleNextScreenButton("resources/movieOrder.fxml");
     }
 
 }

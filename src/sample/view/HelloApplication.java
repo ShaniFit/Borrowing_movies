@@ -1,4 +1,4 @@
-package com.example.demo9;
+package sample.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,14 +14,14 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         HelloApplication.primaryStage = primaryStage;
-        loadScene("hello-view.fxml");
+        loadScene("resources/hello-view.fxml");
     }
 
     public static void loadScene(String fxmlPath) throws Exception {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(fxmlPath));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        primaryAddMovieControllerStage.setScene(scene);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

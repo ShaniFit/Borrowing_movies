@@ -16,7 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+        FXMLLoader.load(Objects.requireNonNull(getClass().getResource("resources/hello-view.fxml")));
         FXMLLoader fxmlLoader = new FXMLLoader(sample.Main.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 460, 400);
         stage.setTitle("Movie Rent");
