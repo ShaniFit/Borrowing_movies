@@ -5,7 +5,7 @@ public class User extends DBimport {
     private int id;
     private String userName;
     private String passward;
-    private int isAdmin;
+    private Boolean isAdmin;
 
     static int idCounter = 0;
 
@@ -13,7 +13,7 @@ public class User extends DBimport {
     {
 
     }
-    public User(int id, String userName, String passward, int isAdmin) {
+    public User(int id, String userName, String passward, Boolean isAdmin) {
         this.id = idCounter++;
         this.userName = userName;
         this.passward = passward;
@@ -27,6 +27,18 @@ public class User extends DBimport {
         }
         else{//user not exist
             return false;
+        }
+    }
+
+    public static User login(String username, String password) {
+//        TODO - temp
+        if(true){
+//        if (checkUserExist(username, password)){//check if user exist return true
+            //type some code
+            return new User(1, username, password, false);
+        }
+        else{//user not exist
+            return null;
         }
     }
 
@@ -64,12 +76,23 @@ public class User extends DBimport {
     }
 
 
-    public int isAdmin() {
+    public Boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(int admin) {
+    public void setAdmin(Boolean admin) {
         isAdmin = admin;
+    }
+
+
+    public boolean saveOnDB() {
+        try {
+            insertNewUser(id, userName, passward, isAdmin);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
 
