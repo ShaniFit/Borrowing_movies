@@ -9,11 +9,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import sample.db.Category;
 import sample.db.Movie;
 import sample.db.User;
 
@@ -123,34 +126,51 @@ public class MainPageController  extends HelloController implements Initializabl
     @FXML
     private Button viewOrders;
 
-    void loadMovies() {
+    private void loadMoviesByKey() {
         // Load the movies from the database and display them in movie1, movie2, ..., movie8.
         // For each movie, set the title, category, and image.
         // If there are fewer than 8 movies, hide the remaining movie panes.
         // get user choice
-        String choice = choiceAll.getValue();
+        Movie m  = new Movie();
+        String choice = choiceAll.getSelectionModel().getSelectedItem();
         Movie[] movies;
-        switch (choice) {
-        case "Title":
-            movies = Movie.loadAvailableMoviesByTitle(searchWord.getText());
-        case "Category":
-            movies = Movie.loadAvailableMoviesByCategory(searchWord.getText());
-        case "Duration":
-            movies = Movie.loadAvailableMoviesByDuration(Integer.parseInt(searchWord.getText()));
-        default:
-            movies = Movie.loadAvailableMovies();}
-        // TODO - UI - Load the movies into the UI - 8 movies
-        for (int i = 0; i < movies.length; i++) {
-            AnchorPane movie = (AnchorPane) movie2.getParent().getChildrenUnmodifiable().get(i);
-            ImageView image = (ImageView) movie.getChildren().get(0);
-            Label title = (Label) movie.getChildren().get(1);
-            Label category = (Label) movie.getChildren().get(2);
-            image.setImage(movies[i].getImage());
-            title.setText(movies[i].getMovieTitle());
-            category.setText(movies[i].getCategory());
-        }
-    }
 
+        switch (choice) {
+            case "Title":
+                System.out.println(searchWord.getText());
+                movies = m.exportMovieByTitle(searchWord.getText());
+            case "Category":
+                Category c = new Category();
+                Category category = c.getCategoryByName(searchWord.getText());
+                movies = m.exportMovieByCategory(searchWord.getText());
+            case "Duration":
+                movies = m.exportMovieByDuration(searchWord.getText());
+            case "All":
+                movies = m.exportMovie();
+            }
+
+        // TODO - UI - Load the movies into the UI - 8 movies
+        title1.setText("movies[0].getMovieTitle()");
+//        for (int i = 0; i < movies.length; i++) {
+//            AnchorPane movie = (AnchorPane) movie2.getParent().getChildrenUnmodifiable().get(i);
+//            ImageView image = (ImageView) movie.getChildren().get(0);
+//            Label title = (Label) movie.getChildren().get(1);
+//            Label category = (Label) movie.getChildren().get(2);
+////            image.setImage(movies[i].getImage());
+//            title.setText(movies[i].getMovieTitle());
+////            category.setText(movies[i].getCategory());
+//        }
+    }
+    private void loadMovies(){
+        Movie[] movies;
+        Movie m  = new Movie();
+        movies = m.exportMovie();
+        title1.setText(movies[0].getMovieTitle());
+        category1.setText(movies[0].getCategory());
+        Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
+        image1.setImage(initialImage);
+        // TODO - UI - Load the movies into the UI - 8 movies,
+    }
     @FXML
     void pressViewOrders(ActionEvent event) {
         handleNextScreenButton("resources/ordersView.fxml");
@@ -164,7 +184,8 @@ public class MainPageController  extends HelloController implements Initializabl
     @FXML
     private void searchButton(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-                String text = searchWord.getText();
+                userSearchWord = searchWord.getText();
+                userSearchFilter = choiceAll.getSelectionModel().getSelectedItem();
                 handleNextScreenButton("resources/movieSearch.fxml");
             }
     }
@@ -173,7 +194,7 @@ public class MainPageController  extends HelloController implements Initializabl
         handleNextScreenButton("resources/movieSearch.fxml");
     }
 
-    private String[] choice={"Title","Category","Duration"};
+    private String[] choice={"All","Title","Category","Duration"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -182,6 +203,8 @@ public class MainPageController  extends HelloController implements Initializabl
             viewOrders.setVisible(false);
         }
         choiceAll.getItems().addAll(choice);
+        choiceAll.setValue("All");
+        loadMovies();
     }
 
 
