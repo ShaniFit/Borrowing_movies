@@ -15,14 +15,23 @@ public class Review extends DBimport {
         this.userID = userID;
         this.movieID = movieID;
     }
-    public void newReview()
-    {
+    public Review(){}
+    public void addNewReviewToDB() {
         try {
             insertNewReview(reviewID, rating, text, userID, movieID);
             System.out.println("add successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public Review[] exportSpesificReview(int movieID)
+    {
+        //Array of all the movieID's reviews
+        return super.exportSpesificReview(movieID);
+    }
+    public Review[] exportReview() {
+         //Array of all the movie's reviews
+        return super.exportReview();
     }
     public int getReviewID() {
         return reviewID;
@@ -63,18 +72,7 @@ public class Review extends DBimport {
     public void setMovieID(int movieID) {
         this.movieID = movieID;
     }
-    public void getReviewByMoovie(int movieID) {
-        // return the review of the movie
-        exportSpesificReview(movieID); //printing all the moviesID's reviews
-        return ;
-    }
 
-    public void addReviewToDB() {
-        try {
-            insertNewReview(reviewID, rating, text, userID, movieID);
-            System.out.println("add successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
+
 }

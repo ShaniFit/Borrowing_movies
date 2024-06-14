@@ -2,9 +2,11 @@ package sample.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import sample.db.Category;
 import sample.db.Movie;
 
 public class MovieSearchController extends HelloController{
@@ -57,11 +59,40 @@ public class MovieSearchController extends HelloController{
     @FXML
     private Label title4;
 
+    private void loadMoviesByKey() {
+        // Load the movies from the database and display them in movie1, movie2, ..., movie8.
+        // For each movie, set the title, category, and image.
+        // If there are fewer than 8 movies, hide the remaining movie panes.
+        // get user choice
+        Movie m  = new Movie();
+        Movie[] movies = new Movie[8];
+
+        switch (userSearchFilter) {
+            case "Title":
+                System.out.println(userSearchWord);
+                movies = m.exportMovieByTitle(userSearchWord);
+            case "Category":
+                movies = m.exportMovieByCategory(userSearchWord);
+            case "Duration":
+                movies = m.exportMovieByDuration(userSearchWord);
+            case "All":
+                movies = m.exportMovie();
+
+        }
+        // TODO - UI - Load the movies into the UI
+        title1.setText(movies[0].getMovieTitle());
+        category1.setText(movies[0].getCategory());
+        Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
+        image1.setImage(initialImage);
+    }
     @FXML
     void enterMovie(MouseEvent event) {
         // TODO - pass id to the next screen instead of 1
-        selectedMovie = Movie.getMovieById(1);
+//        selectedMovie = Movie.getMovieById(1);
         handleNextScreenButton("resources/movieOrder.fxml");
     }
-
+    @FXML
+    void initialize() {
+        loadMoviesByKey();
+    }
 }

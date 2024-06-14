@@ -1,55 +1,55 @@
 package sample.db;
 
 public class User extends DBimport {
-    // TODO: change user to work with mail maybe instead of username
     private int id;
     private String userName;
     private String passward;
-    private Boolean isAdmin;
+    private int isAdmin;
 
-    static int idCounter = 0;
-
+    static int idCounter = 1;
     public User()
     {
-
     }
-    public User(int id, String userName, String passward, Boolean isAdmin) {
-        this.id = idCounter++;
+    public User(int isAdmin, String userName, String passward)
+    {
+        this.isAdmin = isAdmin;
+        this.id = idCounter;
         this.userName = userName;
         this.passward = passward;
+        idCounter++;
+    }
+
+    public User(int id, int isAdmin, String userName, String passward)
+    {
         this.isAdmin = isAdmin;
-    }
+        this.id = id;
+        this.userName = userName;
+        this.passward = passward;
 
-    protected static boolean User_login(String username, String password) {
-        if (checkUserExist(username, password)){//check if user exist return true
-            //type some code
-            return true;
-        }
-        else{//user not exist
-            return false;
-        }
     }
-
-    public static User login(String username, String password) {
-//        TODO - temp
-        if(true){
-//        if (checkUserExist(username, password)){//check if user exist return true
-            //type some code
-            return new User(1, username, password, false);
+// Add check if user in table and return user
+    protected  boolean user_login(String username, String password) {
+        return checkUserExist(username, password);
+    }
+    //return details of user after login
+    public User login(String username, String password) {
+        if(checkUserExist(username, password)){
+            return exportSpesificUser(password,username);
         }
-        else{//user not exist
+        else{
+            System.out.println("user not exist");
             return null;
         }
     }
-
+    //add user working(cheked)
     public void addNewUserInDB()
     {
         try {
-            insertNewUser(id,  userName,  passward,  isAdmin);
+            insertNewUser(this.id,  this.userName,  this.passward,  this.isAdmin);
+            System.out.println("add successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("add successfully");
     }
     public int getId() {
         return id;
@@ -76,23 +76,23 @@ public class User extends DBimport {
     }
 
 
-    public Boolean isAdmin() {
+    public int isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setAdmin(int admin) {
         isAdmin = admin;
     }
 
 
-    public boolean saveOnDB() {
-        try {
-            insertNewUser(id, userName, passward, isAdmin);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+//    public boolean createNewUser(int id,String userName,String passward,int isAdmin) {
+//        try {
+//            insertNewUser(id, userName, passward, isAdmin);
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 }
 

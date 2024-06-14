@@ -1,7 +1,5 @@
 package sample.db;
 
-import java.sql.PreparedStatement;
-
 public class Category extends DBimport {
     private int categoryID;
     private String categoryName;
@@ -10,43 +8,41 @@ public class Category extends DBimport {
         this.categoryID = categoryID;
         this.categoryName = categoryName;
     }
-    public Category(){
-        categoryID =0;
-        categoryName = null;
-    }
-    // TODO - fix the sql query
-    protected static Category getCategoryByID(int categoryID) {
+    public Category(){ }
+    public void addNewCatogoryToDB(int categoryID, String categoryName)
+    {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM category WHERE CategoryID = ?");
-            statement.setInt(1, categoryID); // Set the value for the first placeholder to the value of the categoryID variable
-
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return new Category(resultSet.getInt("CategoryID"), resultSet.getString("CategoryName"));
-            }
+            insertNewCategory(categoryID,categoryName);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Category();
+        System.out.println("add successfully");
     }
-
-    public static String categoryIdToCategoryName(int categoryID) {
-        Category category = getCategoryByID(categoryID);
-        if (category.isEmpty()) {
-            return null;
-        }
-        return category.getCategoryName();
-    }
-
     public void newCategory()
     {
         try {
-            insertNewCategory(categoryID, categoryName);
+            insertNewCategory(this.categoryID, this.categoryName);
             System.out.println("add successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    //Given category id and returns the object of the id
+    protected Category getCategoryByID(int categoryID) {
+        Category c = exportSpesificCategory(categoryID);
+        return c;
+    }
+    protected Category[] getCategories(int categoryID) {
+        return exportCategory();
+    }
+    public int catgtoryNameToCategoryID(String categoryName) {
+        Category category = getCategoryByName(categoryName);
+        if (category == null) {
+            return -1;
+        }
+        return category.getCategoryID();
+    }
+
     public int getCategoryID() {
         return categoryID;
     }
@@ -63,15 +59,4 @@ public class Category extends DBimport {
         this.categoryName = categoryName;
     }
 
-    public static int catgtoryNameToCategoryID(String categoryName) {
-        Category category = DBimport.getCategoryByName(categoryName);
-        if (category.isEmpty()) {
-            return -1;
-        }
-        return category.getCategoryID();
-    }
-
-    private boolean isEmpty() {
-        return  (categoryID == 0 && categoryName == null);
-    }
 }

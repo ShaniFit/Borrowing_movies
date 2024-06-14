@@ -56,8 +56,9 @@ public class MovieOrderController extends HelloController {
 
     @FXML
     void orderPress(ActionEvent event) {
-        Movie movie = Movie.getMovieById(movieId);
-        movie.orderMovie(dateLabel.getText());
+//        selectedMovie =
+        // TODO - temp
+//        selectedMovie.orderMovie(dateLabel.getText());
     }
     @FXML
     void removePress(ActionEvent event) {
@@ -73,7 +74,8 @@ public class MovieOrderController extends HelloController {
     public void initialize(){
         // TODO - load movie details from last screen (id)
         movieId = 1;
-        Movie movie = Movie.getMovieById(movieId);
+//        Movie movie = Movie.
+//        selectedMovie.getMovieById(movieId);
         // TODO - load movie details into fxml
         if(isAdmin){
             order.setVisible(false);

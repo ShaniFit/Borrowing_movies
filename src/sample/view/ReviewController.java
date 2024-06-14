@@ -48,9 +48,10 @@ public class ReviewController extends HelloController {
     private Label titleLabel;
 
     void setMovieReview(){
+        // TODO
         // use given movieID
         Review review = new Review(-1,rate, "This movie is great", currentUser.getId(), selectedMovie.getMovieID());
-        review.addReviewToDB();
+//        review.addReviewToDB();
     }
 
     @FXML

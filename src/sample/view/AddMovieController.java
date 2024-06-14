@@ -55,9 +55,12 @@ public class AddMovieController {
         String releaseDate = addReleaseDate.getText();
         String title = addTitle.getText();
         Movie movie = new Movie(-1,
-                title, "", releaseDate, Integer.parseInt(duration), Integer.parseInt(category), true,
-                Integer.parseInt(price));
-        movie.addMovieToDB();
+                title, "", releaseDate, duration, Integer.parseInt(category), 1);
+//        Movie movie = new Movie(-1,
+//                title, "", releaseDate, Integer.parseInt(duration), Integer.parseInt(category), 1,
+//                Integer.parseInt(price));
+//        movie.addMovieToDB();
+        // TODO - add to db
         // TODO - UI - pass to the main page
     }
 

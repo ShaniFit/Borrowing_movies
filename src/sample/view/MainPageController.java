@@ -189,6 +189,7 @@ public class MainPageController  extends HelloController implements Initializabl
                 handleNextScreenButton("resources/movieSearch.fxml");
             }
     }
+
     @FXML
     void enterMovie(MouseEvent event) {
         handleNextScreenButton("resources/movieSearch.fxml");
@@ -206,6 +207,5 @@ public class MainPageController  extends HelloController implements Initializabl
         choiceAll.setValue("All");
         loadMovies();
     }
-
 
 }
