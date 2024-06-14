@@ -1,4 +1,5 @@
-package sample.db;//import javafx.scene.image.Image;
+package sample.db;
+
 
 import javafx.scene.image.Image;
 
@@ -32,7 +33,7 @@ public class Movie extends DBimport{
 //      TODO-   this.price = price;
 
     }
-public Movie(){
+    public Movie(){
         this.movieID = -1;
         this.movieTitle = null;
         this.description = null;
@@ -41,8 +42,6 @@ public Movie(){
         this.categoryID = 0;
         this.isAvailable = false;
         this.price = 0;
-    }
-
     }
 
     public void addNewMovieToDB(int movieID, int categoryID,String movieTitle,String description,String releaseDate,
