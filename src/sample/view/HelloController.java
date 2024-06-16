@@ -75,7 +75,7 @@ public class HelloController{
         return email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com");
     }
 
-    private void showAlert(String title, String content) {
+    void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);

@@ -17,7 +17,7 @@ public class Movie extends DBimport{
     private int price;
 
     public Movie(int movieID, String movieTitle, String description, String releaseDate,
-                 String duration, int categoryID, int isAvailable) {
+                 String duration, int categoryID, int isAvailable, int price) {
         if (movieID == -1) {
             Random rand = new Random();
             this.movieID = rand.nextInt(9999);
@@ -30,7 +30,7 @@ public class Movie extends DBimport{
         this.duration = duration;
         this.categoryID = categoryID;
         this.isAvailable = isAvailable;
-//      TODO-   this.price = price;
+        this.price = price;
 
     }
     public Movie(){
@@ -40,16 +40,19 @@ public class Movie extends DBimport{
         this.releaseDate = null;
         this.duration = 0;
         this.categoryID = 0;
-        this.isAvailable = false;
+        this.isAvailable = 0;
         this.price = 0;
     }
 
-    public void addNewMovieToDB(int movieID, int categoryID,String movieTitle,String description,String releaseDate,
-                                String duration,int isAvailable)
+    public int getPrice() {
+        return price;
+    }
+
+    public void addNewMovieToDB()
     {
         try {
             insertNewMovie(movieID, movieTitle, description, releaseDate,
-            duration, categoryID, isAvailable);
+            duration, categoryID, isAvailable, price);
             System.out.println("add successfully");
         } catch (Exception e) {
             e.printStackTrace();
@@ -248,5 +251,9 @@ public class Movie extends DBimport{
 
     public String  getImagePath() {
         return "resources/movie_images/" +movieID+".jpeg";
+    }
+
+    public void updateMovieInDB() {
+        // TODO - update the movie in the db
     }
 }

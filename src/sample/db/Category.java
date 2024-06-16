@@ -4,19 +4,25 @@ public class Category extends DBimport {
     private int categoryID;
     private String categoryName;
 
+    private static int categoryIDCounter = 10;
+
     public Category(int categoryID, String categoryName) {
-        this.categoryID = categoryID;
+        if (categoryID== -1) {
+            this.categoryID = categoryIDCounter++;
+        } else {
+            this.categoryID = categoryID;
+        }
         this.categoryName = categoryName;
     }
     public Category(){ }
-    public void addNewCatogoryToDB(int categoryID, String categoryName)
+    public void addNewCatogoryToDB()
     {
         try {
             insertNewCategory(categoryID,categoryName);
+            System.out.println("add successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("add successfully");
     }
     public void newCategory()
     {

@@ -19,7 +19,7 @@ public class ReviewController extends HelloController {
     private Label dateLabel;
 
     @FXML
-    private Label directorLabel;
+    private Label descriptionLabel;
 
     @FXML
     private Label durationLabel;

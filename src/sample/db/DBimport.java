@@ -106,10 +106,10 @@ public class DBimport {
         System.out.println("add successfully");
     }
     public void insertNewMovie(int movieID, String movieTitle, String description, String releaseDate,
-                               String duration, int categoryID, int isAvailable) {
+                               String duration, int categoryID, int isAvailable, int price) {
         try {
             statement.executeUpdate("INSERT INTO movie " + "VALUES ('" + movieID + "','" + movieTitle + "','" + description + "'," +
-                    "'" + releaseDate + "','" + duration + "','" + categoryID + "','" + isAvailable + "')");
+                    "'" + releaseDate + "','" + duration + "','" + categoryID + "','" + isAvailable + "','" + price + "')");
             System.out.println("add successfully");
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,9 +215,7 @@ public class DBimport {
             movies = new Movie[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
                 if (resultSet.getInt("IsAvailable") == 1) {
-                    movies[resultSet.getRow()-1] = new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
-                            resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
-                            resultSet.getString("Duration"), resultSet.getInt("CategoryID"), resultSet.getInt("IsAvailable"));
+                    movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
                 }
             }
         } catch (Exception e) {
@@ -235,9 +233,7 @@ public class DBimport {
             while (resultSet.next()) {
                 // add movie to the array is the movie available
                 if (resultSet.getString("CategoryName").equals(categoryName)) {
-                    movies[resultSet.getRow()-1] = new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
-                            resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
-                            resultSet.getString("Duration"), resultSet.getInt("CategoryID"), resultSet.getInt("IsAvailable"));
+                    movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
                 }
             }
         } catch (Exception e) {
@@ -331,13 +327,14 @@ public class DBimport {
             statement.setString(1, categoryName); // Set the value for the first placeholder to the value of the userName variable
 
             resultSet = statement.executeQuery();
-            resultSet.next();
-            category = new Category(resultSet.getInt("CategoryID"),resultSet.getString("CategoryName"));
+//            resultSet.next();
+            if( resultSet.next())
+                category = new Category(resultSet.getInt("CategoryID"),resultSet.getString("CategoryName"));
             return category;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return category;
     }
 
     /*
@@ -351,6 +348,12 @@ public class DBimport {
             e.printStackTrace();
         }
     }
+    private Movie resultSetToMovie(ResultSet resultSet) throws SQLException {
+        return new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
+                resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
+                resultSet.getString("Duration"), resultSet.getInt("CategoryID"),
+                resultSet.getInt("IsAvailable"), resultSet.getInt("Price"));
+    }
     public Movie[] exportMovieByTitle(String title) {
         Movie[] movies = null;
         try {
@@ -362,9 +365,7 @@ public class DBimport {
             while (resultSet.next()) {
                 // add movie to the array is the movie available
                 if (resultSet.getString("MovieTitle").equals(title)) {
-                    movies[resultSet.getRow()-1] = new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
-                            resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
-                            resultSet.getString("Duration"), resultSet.getInt("CategoryID"), resultSet.getInt("IsAvailable"));
+                    movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
                 }
             }
         } catch (Exception e) {
@@ -383,9 +384,7 @@ public class DBimport {
             while (resultSet.next()) {
                 // add movie to the array is the movie available
                 if (resultSet.getString("Duration").equals(duration)) {
-                    movies[resultSet.getRow()-1] = new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
-                            resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
-                            resultSet.getString("Duration"), resultSet.getInt("CategoryID"), resultSet.getInt("IsAvailable"));
+                    movies[resultSet.getRow()-1] =resultSetToMovie(resultSet);
                 }
             }
         } catch (Exception e) {

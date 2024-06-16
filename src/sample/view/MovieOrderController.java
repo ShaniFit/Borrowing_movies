@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import sample.db.Movie;
+import sample.db.Order;
 
 public class MovieOrderController extends HelloController {
 
@@ -25,7 +26,7 @@ public class MovieOrderController extends HelloController {
     private Label priceLabel;
 
     @FXML
-    private Label directorLabel;
+    private Label descriptionLabel;
 
     @FXML
     private Label durationLabel;
@@ -56,9 +57,11 @@ public class MovieOrderController extends HelloController {
 
     @FXML
     void orderPress(ActionEvent event) {
-//        selectedMovie =
-        // TODO - temp
-//        selectedMovie.orderMovie(dateLabel.getText());
+        Order order = new Order(-1, selectedMovie.getPrice(), dateLabel.getText(),currentUser.getId(), selectedMovie.getMovieID());
+        order.addNewOrderToDB();
+        selectedMovie.setAvailable(0);
+        selectedMovie.updateMovieInDB();
+        // TODO - shani check this
     }
     @FXML
     void removePress(ActionEvent event) {
