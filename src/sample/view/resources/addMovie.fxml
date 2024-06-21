@@ -16,11 +16,11 @@
             <Text fill="#f4f2f2" layoutX="25.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title:" />
             <Text fill="#f4f2f2" layoutX="25.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Release Date:" />
             <Text fill="#f4f2f2" layoutX="26.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration:" />
-            <Text fill="#f4f2f2" layoutX="27.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Director:" />
+            <Text fill="#f4f2f2" layoutX="27.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description:" />
             <Text fill="#f4f2f2" layoutX="27.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Category:" />
             <TextField fx:id="addReleaseDate" layoutX="111.0" layoutY="63.0" />
             <TextField fx:id="addDuration" layoutX="111.0" layoutY="104.0" />
-            <TextField fx:id="addDirector" layoutX="112.0" layoutY="143.0" />
+            <TextField fx:id="addDescription" layoutX="112.0" layoutY="143.0" />
             <TextField fx:id="addCategory" layoutX="113.0" layoutY="185.0" />
             <Text fill="#f4f2f2" layoutX="28.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" />
             <TextField fx:id="addPrice" layoutX="114.0" layoutY="223.0" />

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class HelloApplication extends Application {
@@ -13,6 +14,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         HelloApplication.primaryStage = primaryStage;
         loadScene("resources/hello-view.fxml");
     }

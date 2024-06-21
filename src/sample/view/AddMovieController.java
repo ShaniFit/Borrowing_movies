@@ -8,12 +8,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sample.db.Category;
 import sample.db.Movie;
 
 import java.io.File;
 
-public class AddMovieController {
-// TODO - remove form fxml the director field
+public class AddMovieController extends HelloController {
     @FXML
     private TextField addCategory;
 
@@ -31,6 +31,9 @@ public class AddMovieController {
 
     @FXML
     private ImageView movieImage;
+
+    @FXML
+    private TextField addDescription;
 
     @FXML
     void addImage(MouseEvent event) {
@@ -54,11 +57,35 @@ public class AddMovieController {
         String price = addPrice.getText();
         String releaseDate = addReleaseDate.getText();
         String title = addTitle.getText();
-        Movie movie = new Movie(-1,
-                title, "", releaseDate, Integer.parseInt(duration), Integer.parseInt(category), true,
-                Integer.parseInt(price));
-        movie.addMovieToDB();
-        // TODO - UI - pass to the main page
+        String description = addDescription.getText();
+        Movie movie = validateInput(category, duration, price, releaseDate, title, description);
+        if (movie == null) {
+            showAlert("Error", "Invalid input");
+            return;
+        }
+        movie.addNewMovieToDB();
+        handleNextScreenButton("resources/mainPage.fxml");
     }
+
+    private Movie validateInput(String category, String duration, String price, String releaseDate, String title, String description) {
+        Movie movie = null;
+        Category c = new Category();
+        Category movieCategory = c.getCategoryByName(category);
+        if (movieCategory==null){
+            movieCategory = new Category(-1,category);
+            movieCategory.addNewCatogoryToDB();
+        }
+        if (duration != null && !duration.isEmpty() && duration.matches("[0-9]+")) {
+            if (price != null && !price.isEmpty() && price.matches("[0-9]+")) {
+                if (releaseDate != null && !releaseDate.isEmpty()) {
+                    if (title != null && !title.isEmpty()) {
+                        return new Movie(-1, title, description, releaseDate, duration, movieCategory.getCategoryID(), 1, Integer.parseInt(price));
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 
 }

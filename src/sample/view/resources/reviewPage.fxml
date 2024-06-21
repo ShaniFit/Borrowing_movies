@@ -21,7 +21,7 @@
             <Label fx:id="titleLabel" layoutX="106.0" layoutY="27.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
             <Label fx:id="categoryLabel" layoutX="107.0" layoutY="66.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
             <Label fx:id="durationLabel" layoutX="108.0" layoutY="107.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
-            <Label fx:id="directorLabel" layoutX="109.0" layoutY="147.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
+            <Label fx:id="descriptionLabel" layoutX="109.0" layoutY="147.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
             <Label fx:id="dateLabel" layoutX="109.0" layoutY="144.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
          </children>
       </AnchorPane>

@@ -22,7 +22,7 @@
       </AnchorPane>
       <ImageView blendMode="LIGHTEN" fitHeight="63.0" fitWidth="71.0" layoutX="717.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@OIG2%20(3).jpeg" />
+            <Image url="@movie_images/1.jpeg" />
          </image>
       </ImageView>
       <Text fill="#f4f2f2" layoutX="38.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home |  Search">

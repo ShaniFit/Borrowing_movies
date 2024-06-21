@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import sample.db.Movie;
+import sample.db.Order;
 
 public class MovieOrderController extends HelloController {
 
@@ -25,7 +26,7 @@ public class MovieOrderController extends HelloController {
     private Label priceLabel;
 
     @FXML
-    private Label directorLabel;
+    private Label descriptionLabel;
 
     @FXML
     private Label durationLabel;
@@ -56,8 +57,10 @@ public class MovieOrderController extends HelloController {
 
     @FXML
     void orderPress(ActionEvent event) {
-        Movie movie = Movie.getMovieById(movieId);
-        movie.orderMovie(dateLabel.getText());
+        Order order = new Order(-1, selectedMovie.getPrice(), dateLabel.getText(),currentUser.getId(), selectedMovie.getMovieID());
+        order.addNewOrderToDB();
+        selectedMovie.updateIsAvilable(0);
+        // TODO - shani check this
     }
     @FXML
     void removePress(ActionEvent event) {
@@ -71,10 +74,7 @@ public class MovieOrderController extends HelloController {
     }
 
     public void initialize(){
-        // TODO - load movie details from last screen (id)
-        movieId = 1;
-        Movie movie = Movie.getMovieById(movieId);
-        // TODO - load movie details into fxml
+        // TODO - UI - shir - load movie details into fxml use selectedMovie.
         if(isAdmin){
             order.setVisible(false);
             orderButton.setVisible(false);
