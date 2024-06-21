@@ -59,8 +59,7 @@ public class MovieOrderController extends HelloController {
     void orderPress(ActionEvent event) {
         Order order = new Order(-1, selectedMovie.getPrice(), dateLabel.getText(),currentUser.getId(), selectedMovie.getMovieID());
         order.addNewOrderToDB();
-        selectedMovie.setAvailable(0);
-        selectedMovie.updateMovieInDB();
+        selectedMovie.updateIsAvilable(0);
         // TODO - shani check this
     }
     @FXML
@@ -75,11 +74,7 @@ public class MovieOrderController extends HelloController {
     }
 
     public void initialize(){
-        // TODO - load movie details from last screen (id)
-        movieId = 1;
-//        Movie movie = Movie.
-//        selectedMovie.getMovieById(movieId);
-        // TODO - load movie details into fxml
+        // TODO - UI - shir - load movie details into fxml use selectedMovie.
         if(isAdmin){
             order.setVisible(false);
             orderButton.setVisible(false);

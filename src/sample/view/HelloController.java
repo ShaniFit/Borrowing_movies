@@ -87,7 +87,7 @@ public class HelloController{
     void pressLogin(ActionEvent event) {
         String username = usernameLogin.getText();
         String password = passwordLogin.getText();
-        isAdmin=true;
+        isAdmin=false;
         currentUser = new User();
         currentUser = currentUser.login(username, password);
         if (currentUser != null) {

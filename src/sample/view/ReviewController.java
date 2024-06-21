@@ -48,10 +48,10 @@ public class ReviewController extends HelloController {
     private Label titleLabel;
 
     void setMovieReview(){
-        // TODO
-        // use given movieID
+        // TODO - UI - shir - insert the real review form the ui into thr text.
         Review review = new Review(-1,rate, "This movie is great", currentUser.getId(), selectedMovie.getMovieID());
-//        review.addReviewToDB();
+        review.insertNewReview();
+        handleNextScreenButton("resources/mainPage.fxml");
     }
 
     @FXML
@@ -83,5 +83,5 @@ public class ReviewController extends HelloController {
         }
     }
 
-
+ // TODO - UI - shir - add  submit button  and creat function for that. use "setMovieReview" function for that.
 }

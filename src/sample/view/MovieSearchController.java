@@ -79,7 +79,7 @@ public class MovieSearchController extends HelloController{
                 movies = m.exportMovie();
 
         }
-        // TODO - UI - Load the movies into the UI
+        // TODO - UI - shir - Load the movies into the UI
         title1.setText(movies[0].getMovieTitle());
         category1.setText(movies[0].getCategory());
         Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
@@ -87,8 +87,9 @@ public class MovieSearchController extends HelloController{
     }
     @FXML
     void enterMovie(MouseEvent event) {
-        // TODO - pass id to the next screen instead of 1
-//        selectedMovie = Movie.getMovieById(1);
+        // which movie was selected??
+        // TODO - UI - Shir - it shuld put the selected movie inside selectedMovie.
+        selectedMovie = new Movie();
         handleNextScreenButton("resources/movieOrder.fxml");
     }
     @FXML

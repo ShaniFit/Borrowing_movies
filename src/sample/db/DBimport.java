@@ -206,7 +206,7 @@ public class DBimport {
         }
         return reviews;
     }
-    public Movie[] exportMovie() {
+    public Movie[] OLDexportMovie() {
         Movie[] movies = null;
         try {
             resultSet = statement.executeQuery("select * from movie");
@@ -217,6 +217,21 @@ public class DBimport {
                 if (resultSet.getInt("IsAvailable") == 1) {
                     movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return movies;
+    }
+    public Movie[] exportMovie() {
+        Movie[] movies = null;
+        try {
+            resultSet = statement.executeQuery("select * from movie");
+
+
+            movies = new Movie[resultSet.getFetchSize()+1];
+            while (resultSet.next()) {
+                movies[resultSet.getRow()-1] =resultSetToMovie(resultSet);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -392,4 +407,6 @@ public class DBimport {
         }
         return movies;
     }
+
+
 }

@@ -74,5 +74,7 @@ public class Review extends DBimport {
     }
 
 
-
+    public void insertNewReview() {
+        super.insertNewReview(reviewID, rating, text, userID, movieID);
+    }
 }

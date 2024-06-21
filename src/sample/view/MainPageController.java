@@ -125,7 +125,7 @@ public class MainPageController  extends HelloController implements Initializabl
 
     @FXML
     private Button viewOrders;
-
+// TODO - UI - shir - fix the problem that before searching we can select movie
     private void loadMoviesByKey() {
         // Load the movies from the database and display them in movie1, movie2, ..., movie8.
         // For each movie, set the title, category, and image.
@@ -169,7 +169,7 @@ public class MainPageController  extends HelloController implements Initializabl
         category1.setText(movies[0].getCategory());
         Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
         image1.setImage(initialImage);
-        // TODO - UI - Load the movies into the UI - 8 movies,
+        // TODO - UI - shir - Load the movies into the UI - 8 movies,
     }
     @FXML
     void pressViewOrders(ActionEvent event) {

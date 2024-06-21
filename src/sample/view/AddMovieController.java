@@ -64,7 +64,7 @@ public class AddMovieController extends HelloController {
             return;
         }
         movie.addNewMovieToDB();
-        // TODO - UI - pass to the main page
+        handleNextScreenButton("resources/mainPage.fxml");
     }
 
     private Movie validateInput(String category, String duration, String price, String releaseDate, String title, String description) {

@@ -38,7 +38,7 @@ public class Movie extends DBimport{
         this.movieTitle = null;
         this.description = null;
         this.releaseDate = null;
-        this.duration = 0;
+        this.duration ="";
         this.categoryID = 0;
         this.isAvailable = 0;
         this.price = 0;
@@ -51,8 +51,7 @@ public class Movie extends DBimport{
     public void addNewMovieToDB()
     {
         try {
-            insertNewMovie(movieID, movieTitle, description, releaseDate,
-            duration, categoryID, isAvailable, price);
+            insertNewMovie(movieID, movieTitle, description, releaseDate, duration, categoryID, isAvailable, price);
             System.out.println("add successfully");
         } catch (Exception e) {
             e.printStackTrace();
@@ -255,5 +254,17 @@ public class Movie extends DBimport{
 
     public void updateMovieInDB() {
         // TODO - update the movie in the db
+    }
+    public void updateIsAvilable(int isAvilable)
+    {
+        this.isAvailable = isAvilable;
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE movie SET isAvailable = ? WHERE MovieID = ?");
+            statement.setInt(1, isAvilable); // Set the value for the first placeholder to the value of the userName variable
+            statement.setInt(2, movieID);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
