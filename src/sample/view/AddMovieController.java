@@ -1,21 +1,24 @@
-package sample.view;
+package com.example.demo9;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import sample.db.Category;
-import sample.db.Movie;
 
 import java.io.File;
 
 public class AddMovieController extends HelloController {
+
     @FXML
     private TextField addCategory;
+
+    @FXML
+    private TextField addDirector;
 
     @FXML
     private TextField addDuration;
@@ -33,9 +36,6 @@ public class AddMovieController extends HelloController {
     private ImageView movieImage;
 
     @FXML
-    private TextField addDescription;
-
-    @FXML
     void addImage(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
@@ -49,43 +49,18 @@ public class AddMovieController extends HelloController {
         }
     }
 
-
+    @FXML
+    void enterHome(MouseEvent event) {
+        handleNextScreenButton("mainPage.fxml");
+    }
     @FXML
     void pressSubmit(ActionEvent event) {
-        String category = addCategory.getText();
-        String duration = addDuration.getText();
-        String price = addPrice.getText();
-        String releaseDate = addReleaseDate.getText();
-        String title = addTitle.getText();
-        String description = addDescription.getText();
-        Movie movie = validateInput(category, duration, price, releaseDate, title, description);
-        if (movie == null) {
-            showAlert("Error", "Invalid input");
-            return;
-        }
-        movie.addNewMovieToDB();
-        handleNextScreenButton("resources/mainPage.fxml");
-    }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Add movie");
+        alert.setHeaderText(null);
+        alert.setContentText("Movie added successfully!");
 
-    private Movie validateInput(String category, String duration, String price, String releaseDate, String title, String description) {
-        Movie movie = null;
-        Category c = new Category();
-        Category movieCategory = c.getCategoryByName(category);
-        if (movieCategory==null){
-            movieCategory = new Category(-1,category);
-            movieCategory.addNewCatogoryToDB();
-        }
-        if (duration != null && !duration.isEmpty() && duration.matches("[0-9]+")) {
-            if (price != null && !price.isEmpty() && price.matches("[0-9]+")) {
-                if (releaseDate != null && !releaseDate.isEmpty()) {
-                    if (title != null && !title.isEmpty()) {
-                        return new Movie(-1, title, description, releaseDate, duration, movieCategory.getCategoryID(), 1, Integer.parseInt(price));
-                    }
-                }
-            }
-        }
-        return null;
+        alert.showAndWait();
     }
-
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="700.0" styleClass="body" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ReviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="700.0" styleClass="body" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo9.ReviewController">
    <children>
       <AnchorPane layoutX="461.0" layoutY="100.0" prefHeight="178.0" prefWidth="181.0" styleClass="body2" stylesheets="@style.css">
          <children>
@@ -21,7 +22,7 @@
             <Label fx:id="titleLabel" layoutX="106.0" layoutY="27.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
             <Label fx:id="categoryLabel" layoutX="107.0" layoutY="66.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
             <Label fx:id="durationLabel" layoutX="108.0" layoutY="107.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
-            <Label fx:id="descriptionLabel" layoutX="109.0" layoutY="147.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
+            <Label fx:id="directorLabel" layoutX="109.0" layoutY="147.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
             <Label fx:id="dateLabel" layoutX="109.0" layoutY="144.0" prefHeight="18.0" prefWidth="100.0" textFill="#f7f5f5" />
          </children>
       </AnchorPane>
@@ -44,12 +45,12 @@
       <Text fill="#f4f2f2" layoutX="38.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Review:" />
       <Text fill="#f4f2f2" layoutX="336.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Details:" />
       <Text fill="#f4f2f2" layoutX="49.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Review:" />
-      <ImageView blendMode="LIGHTEN" fitHeight="63.0" fitWidth="71.0" layoutX="628.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView blendMode="LIGHTEN" fitHeight="63.0" fitWidth="71.0" layoutX="598.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@view/resources/logo.jpeg" />
+            <Image url="@OIG2%20(3).jpeg" />
          </image>
       </ImageView>
-      <Text fill="#f4f2f2" layoutX="25.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home | ">
+      <Text fill="#f4f2f2" layoutX="25.0" layoutY="30.0" onMouseClicked="#enterHome" strokeType="OUTSIDE" strokeWidth="0.0" text="Home | ">
          <font>
             <Font size="10.0" />
          </font>
@@ -59,5 +60,6 @@
             <Font name="System Bold" size="10.0" />
          </font>
       </Text>
+      <Button layoutX="667.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#closeButton" text="X" />
    </children>
 </AnchorPane>
