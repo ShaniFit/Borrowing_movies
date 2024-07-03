@@ -38,11 +38,14 @@ public class HelloController{
 
     @FXML
     private TextField usernameRegister;
+
+
     @FXML
     void closeButton(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
+
     @FXML
     void pressRegister(ActionEvent event) {
         String email = emailField.getText();

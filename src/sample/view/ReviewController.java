@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import sample.db.Movie;
 import sample.db.Review;
 
@@ -83,5 +84,8 @@ public class ReviewController extends HelloController {
         }
     }
 
- // TODO - UI - shir - add  submit button  and creat function for that. use "setMovieReview" function for that.
+    @FXML
+    void enterHome(MouseEvent event) {
+        handleNextScreenButton("mainPage.fxml");
+    }
 }

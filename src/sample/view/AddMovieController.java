@@ -2,6 +2,7 @@ package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,8 +15,12 @@ import sample.db.Movie;
 import java.io.File;
 
 public class AddMovieController extends HelloController {
+
     @FXML
     private TextField addCategory;
+
+    @FXML
+    private TextField addDirector;
 
     @FXML
     private TextField addDuration;
@@ -49,7 +54,10 @@ public class AddMovieController extends HelloController {
         }
     }
 
-
+    @FXML
+    void enterHome(MouseEvent event) {
+        handleNextScreenButton("mainPage.fxml");
+    }
     @FXML
     void pressSubmit(ActionEvent event) {
         String category = addCategory.getText();
@@ -64,6 +72,13 @@ public class AddMovieController extends HelloController {
             return;
         }
         movie.addNewMovieToDB();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Add movie");
+        alert.setHeaderText(null);
+        alert.setContentText("Movie added successfully!");
+
+        alert.showAndWait();
+
         handleNextScreenButton("resources/mainPage.fxml");
     }
 
@@ -86,6 +101,5 @@ public class AddMovieController extends HelloController {
         }
         return null;
     }
-
 
 }

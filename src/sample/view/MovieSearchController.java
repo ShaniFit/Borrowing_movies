@@ -5,60 +5,27 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.scene.layout.AnchorPane;
 import sample.db.Category;
 import sample.db.Movie;
 
-public class MovieSearchController extends HelloController{
+public class MovieSearchController extends MainPageController{
 
     @FXML
-    private Label category1;
+    private GridPane grid;
 
     @FXML
-    private Label category2;
-
+    void enterMovie(MouseEvent event) {
+        selectedMovie = new Movie();
+        handleNextScreenButton("resources/movieOrder.fxml");
+    }
     @FXML
-    private Label category3;
-
-    @FXML
-    private Label category4;
-
-    @FXML
-    private ImageView image1;
-
-    @FXML
-    private ImageView image2;
-
-    @FXML
-    private ImageView image3;
-
-    @FXML
-    private ImageView image4;
-
-    @FXML
-    private AnchorPane movie1;
-
-    @FXML
-    private AnchorPane movie2;
-
-    @FXML
-    private AnchorPane movie3;
-
-    @FXML
-    private AnchorPane movie4;
-
-    @FXML
-    private Label title1;
-
-    @FXML
-    private Label title2;
-
-    @FXML
-    private Label title3;
-
-    @FXML
-    private Label title4;
-
+    void enterHome(MouseEvent event) {
+        handleNextScreenButton("mainPage.fxml");
+    }
     private void loadMoviesByKey() {
         // Load the movies from the database and display them in movie1, movie2, ..., movie8.
         // For each movie, set the title, category, and image.
@@ -85,15 +52,9 @@ public class MovieSearchController extends HelloController{
         Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
         image1.setImage(initialImage);
     }
-    @FXML
-    void enterMovie(MouseEvent event) {
-        // which movie was selected??
-        // TODO - UI - Shir - it shuld put the selected movie inside selectedMovie.
-        selectedMovie = new Movie();
-        handleNextScreenButton("resources/movieOrder.fxml");
-    }
-    @FXML
-    void initialize() {
-        loadMoviesByKey();
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadMoviesByKey();//?
+        createScreen(1,4, "movieOrder.fxml",true);
     }
 }

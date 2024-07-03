@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="467.0" styleClass="body" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.HelloController">
    <children>
-      <AnchorPane layoutX="168.0" layoutY="12.0" prefHeight="152.0" prefWidth="285.0" styleClass="body2" stylesheets="@style.css">
+      <AnchorPane layoutX="168.0" layoutY="36.0" prefHeight="152.0" prefWidth="285.0" styleClass="body2" stylesheets="@style.css">
          <children>
             <TextField fx:id="usernameLogin" layoutX="111.0" layoutY="24.0" />
             <Text fill="#f4f2f2" layoutX="25.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
@@ -44,7 +44,7 @@
             <Image url="@logo.jpeg" />
          </image>
       </ImageView>
-      <Text fill="#f4f2f2" layoutX="41.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Register | Login">
+      <Text fill="#f4f2f2" layoutX="41.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Register | Login">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>

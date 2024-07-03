@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="body" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.MovieOrderController">
    <children>
-      <Text fx:id="text" fill="#f4f2f2" layoutX="25.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home |  Login | ">
+      <Text fx:id="text" fill="#f4f2f2" layoutX="25.0" layoutY="30.0" onMouseClicked="#enterHome" strokeType="OUTSIDE" strokeWidth="0.0" text="Home |   ">
          <font>
             <Font size="10.0" />
          </font>
@@ -41,7 +41,7 @@
             <Font name="System Bold" size="10.0" />
          </font>
       </Text>
-      <Text fx:id="remove" fill="#f4f2f2" layoutX="95.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove">
+      <Text fx:id="remove" fill="#f4f2f2" layoutX="97.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>
@@ -49,5 +49,11 @@
       <Button fx:id="removeButton" layoutX="269.0" layoutY="361.0" mnemonicParsing="false" onAction="#removePress" text="Remove" />
       <Button fx:id="reviewButton" layoutX="526.0" layoutY="358.0" mnemonicParsing="false" onAction="#reviewPress" text="Review" />
       <Text fx:id="reviewText" fill="#f4f2f2" layoutX="372.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Want to leave us a review?" />
+      <Text fill="#f4f2f2" layoutX="61.0" layoutY="30.0" onMouseClicked="#enterSearch" strokeType="OUTSIDE" strokeWidth="0.0" text="Search |   ">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Text>
+      <Button layoutX="566.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#closeButton" text="X" />
    </children>
 </AnchorPane>
