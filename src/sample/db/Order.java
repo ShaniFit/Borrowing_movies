@@ -14,6 +14,11 @@ public class Order extends DBimport{
         this.userID = userID;
         this.movieID = movieID;
     }
+
+    public Order() {
+
+    }
+
     public void addNewOrderToDB()
     {
             try {

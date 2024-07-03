@@ -1,10 +1,11 @@
-package com.example.demo9;
+package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -19,13 +20,13 @@ public class MovieOrderController extends HelloController {
     private Label categoryLabel;
 
     @FXML
-    private Label categoryLabel11;
+    private Label price;
 
     @FXML
     private Label dateLabel;
 
     @FXML
-    private Label directorLabel;
+    private Label descriptionLabel;
 
     @FXML
     private Label durationLabel;
@@ -87,6 +88,15 @@ public class MovieOrderController extends HelloController {
     }
 
     public void initialize(){
+        categoryLabel.setText(selectedMovie.getCategory());
+        dateLabel.setText(selectedMovie.getReleaseDate());
+        descriptionLabel.setText(selectedMovie.getDescription());
+        durationLabel.setText(selectedMovie.getDuration());
+        titleLabel.setText(selectedMovie.getMovieTitle());
+        price.setText(Integer.toString(selectedMovie.getPrice()));
+        Image image = new Image(getClass().getResourceAsStream(selectedMovie.getImagePath()));
+        movieImage.setImage(image);
+
         if(isAdmin){
             order.setVisible(false);
             orderButton.setVisible(false);

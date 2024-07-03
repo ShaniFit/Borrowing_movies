@@ -21,7 +21,7 @@ public class OrdersViewController extends MainPageController {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        createScreen(3,6, "movieOrder.fxml",false);
+        createScreen(3,6, "resources/movieOrder.fxml",false);
     }
 }
 

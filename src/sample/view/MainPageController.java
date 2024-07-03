@@ -14,6 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +26,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import sample.db.Category;
 import sample.db.Movie;
 import sample.db.User;
@@ -54,7 +56,7 @@ public class MainPageController  extends HelloController implements Initializabl
     @FXML
     private Button viewOrders;
 // TODO - UI - shir - fix the problem that before searching we can select movie
-    private void loadMoviesByKey() {
+    private void AAAAloadMoviesByKey() {
         // Load the movies from the database and display them in movie1, movie2, ..., movie8.
         // For each movie, set the title, category, and image.
         // If there are fewer than 8 movies, hide the remaining movie panes.
@@ -78,7 +80,7 @@ public class MainPageController  extends HelloController implements Initializabl
             }
 
         // TODO - UI - Load the movies into the UI - 8 movies
-        title1.setText("movies[0].getMovieTitle()");
+//        title1.setText("movies[0].getMovieTitle()");
 //        for (int i = 0; i < movies.length; i++) {
 //            AnchorPane movie = (AnchorPane) movie2.getParent().getChildrenUnmodifiable().get(i);
 //            ImageView image = (ImageView) movie.getChildren().get(0);
@@ -88,16 +90,6 @@ public class MainPageController  extends HelloController implements Initializabl
 //            title.setText(movies[i].getMovieTitle());
 ////            category.setText(movies[i].getCategory());
 //        }
-    }
-    private void loadMovies(){
-        Movie[] movies;
-        Movie m  = new Movie();
-        movies = m.exportMovie();
-        title1.setText(movies[0].getMovieTitle());
-        category1.setText(movies[0].getCategory());
-        Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
-        image1.setImage(initialImage);
-        // TODO - UI - shir - Load the movies into the UI - 8 movies,
     }
     @FXML
     void pressViewOrders(ActionEvent event) {
@@ -128,7 +120,11 @@ public class MainPageController  extends HelloController implements Initializabl
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        createScreen(2,4,"movieSearch.fxml",true);
+        if (selectedMovie != null) {
+            System.out.println("Clicked on " + selectedMovie.getMovieTitle());
+            createScreen(2,4,"resources/movieOrder.fxml",false);
+        }
+        createScreen(2,4,"resources/movieSearch.fxml",true);
 
         if (!isAdmin) {
             addMovie.setVisible(false);
@@ -136,16 +132,17 @@ public class MainPageController  extends HelloController implements Initializabl
         }
         choiceAll.getItems().addAll(choice);
         choiceAll.setValue("All");
-        loadMovies();//?
     }
 
     protected void createScreen(int rows, int cols, String toMove, boolean hasImage){
         // movie grid
-
-        int movieNum=1;
+        Movie[] movies;
+        Movie m  = new Movie();
+        movies = m.exportMovie();
+        int movieNum=0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                AnchorPane newPane = createAnchorPane(hasImage,movieNum,toMove);
+                AnchorPane newPane = createAnchorPane(hasImage,movies[movieNum],toMove);
                 grid.setVgap(10);
                 grid.add(newPane, j, i);
                 movieNum++;
@@ -153,15 +150,15 @@ public class MainPageController  extends HelloController implements Initializabl
         }
     }
 
-    private AnchorPane createAnchorPane(boolean hasImage, int movieNum, String toMove) {
+    private AnchorPane createAnchorPane(boolean hasImage, Movie movie, String toMove) {
         AnchorPane anchorPane = new AnchorPane();
-
-        Label title= createLabel("הקול בראש 2");
-        Label category= createLabel("ילדים");
-        Label orderId= createLabel("01234");
-        Label userName= createLabel("Nir");
-        Label price = createLabel("50₪");
-        Label returnDate=createLabel("10/05/2024");
+        System.out.println(movie.getMovieTitle());
+        Label title= createLabel(movie.getMovieTitle());
+        Label category= createLabel(movie.getCategory());
+        Label orderId= createLabel(Integer.toString(selectedOrder.getOrderID()));
+        Label userName= createLabel(currentUser.getUserName());
+        Label price = createLabel(Integer.toString(movie.getPrice()));
+        Label returnDate=createLabel(selectedOrder.getDate());
 
 
         VBox vbox = new VBox(5);
@@ -169,7 +166,7 @@ public class MainPageController  extends HelloController implements Initializabl
         vbox.setSpacing(5);
 
         if(hasImage) {
-            Image image = new Image("image" + movieNum + ".jpeg"); // image path
+            Image image = new Image(getClass().getResourceAsStream(movie.getImagePath()));
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(300); // image size
             imageView.setFitHeight(250);
@@ -189,8 +186,9 @@ public class MainPageController  extends HelloController implements Initializabl
         // Add click event to the AnchorPane
         anchorPane.setOnMouseClicked(event -> {
             try {
+                selectedMovie = movie;
                 // Load the next scene
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(toMove));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("resources/movieOrder.fxml"));
                 Parent root = fxmlLoader.load();
                 Stage stage = (Stage) anchorPane.getScene().getWindow();
                 stage.setScene(new Scene(root));

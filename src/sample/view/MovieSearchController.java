@@ -47,14 +47,14 @@ public class MovieSearchController extends MainPageController{
 
         }
         // TODO - UI - shir - Load the movies into the UI
-        title1.setText(movies[0].getMovieTitle());
-        category1.setText(movies[0].getCategory());
-        Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
-        image1.setImage(initialImage);
+//        title1.setText(movies[0].getMovieTitle());
+//        category1.setText(movies[0].getCategory());
+//        Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
+//        image1.setImage(initialImage);
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadMoviesByKey();//?
-        createScreen(1,4, "movieOrder.fxml",true);
+//        loadMoviesByKey();//?
+        createScreen(1,4, "resources/movieOrder.fxml",true);
     }
 }

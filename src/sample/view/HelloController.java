@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.db.Movie;
+import sample.db.Order;
 import sample.db.User;
 
 
@@ -16,6 +17,7 @@ public class HelloController{
 
     public static User currentUser;
     public static Movie selectedMovie;
+    public static Order selectedOrder = new Order();
     protected static Boolean isAdmin;
 
     public static String userSearchWord;

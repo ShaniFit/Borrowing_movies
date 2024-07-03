@@ -206,24 +206,27 @@ public class DBimport {
         }
         return reviews;
     }
-    public Movie[] OLDexportMovie() {
+    public Movie[] exportMovie() {
         Movie[] movies = null;
+        ResultSet r;
+        int count = 0;
         try {
+            r = statement.executeQuery("select * from movie");
+            while (r.next()) {
+                count++;
+            }
+            System.out.println(count);
+            movies = new Movie[count];
             resultSet = statement.executeQuery("select * from movie");
-
-
-            movies = new Movie[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
-                if (resultSet.getInt("IsAvailable") == 1) {
-                    movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
-                }
+                movies[resultSet.getRow()-1] =resultSetToMovie(resultSet);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return movies;
     }
-    public Movie[] exportMovie() {
+    public Movie[] BRexportMovie() {
         Movie[] movies = null;
         try {
             resultSet = statement.executeQuery("select * from movie");
@@ -231,7 +234,7 @@ public class DBimport {
 
             movies = new Movie[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
-                movies[resultSet.getRow()-1] =resultSetToMovie(resultSet);
+                movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -260,7 +263,6 @@ public class DBimport {
         User[] users = null;
         try {
             resultSet = statement.executeQuery("select * from user");
-
             users = new User[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
                 users[resultSet.getRow()-1] =new User(resultSet.getInt("ID"),resultSet.getInt("isAdmin"),
