@@ -56,7 +56,7 @@ public class AddMovieController extends HelloController {
 
     @FXML
     void enterHome(MouseEvent event) {
-        handleNextScreenButton("mainPage.fxml");
+        handleNextScreenButton("resources/mainPage.fxml");
     }
     @FXML
     void pressSubmit(ActionEvent event) {

@@ -58,9 +58,15 @@ public class Movie extends DBimport{
         }
     }
 
+    @Override
+    public Movie exportMovieById(int movieId) {
+        return super.exportMovieById(movieId);
+    }
+
     public Movie[] exportMovieByCategory(String categoryName)
-    {
-        return super.exportMovieByCategory(categoryName);
+    {   Category c = new Category();
+        c.getCategoryByName(categoryName);
+        return super.exportMovieByCategory(c.getCategoryID());
     }
 
     public Movie[] exportMovie()
@@ -74,119 +80,6 @@ public class Movie extends DBimport{
     {
         return super.exportMovieByDuration(duration);
     }
-//
-
-//    public Image getImage() {
-//        return new Image("file:src/sample/images/"+movieID+".jpeg");
-//    }
-
-//    public String getCategory() {
-////        return Category.categoryIdToCategoryName(categoryID);
-//        return null;
-//    }
-
-//    public void orderMovie(String text) {
-//        Order order = new Order(-1, text, 1, movieID);
-//        order.newOrder();
-//        // TODO - UI - show order success, or go to home page?
-//    }
-//    public static Movie[] loadAvailableMovies() {
-//        return Movie.exportAllAvilibleMovies();
-//    }
-
-//    public static Movie[] loadAvailableMoviesByDuration(int duration)
-//    {
-//        return Movie.exportMovieByDuration(duration);
-//    }
-//    public static Movie[] loadAvailableMoviesByTitle(String title)
-//    {
-//        return Movie.exportMovieByTitle(title);
-//    }
-
-//     TODO - fix the sql query
-//    protected static Movie[] exportMovieByDuration(int duration) {
-//        Movie[] movies = null;
-//        try {
-//            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movie WHERE Duration = ?");
-//            statement.setInt(1, duration); // Set the value for the first placeholder to the value of the duration variable
-//
-//            resultSet = statement.executeQuery();
-//
-//            movies = new Movie[resultSet.getFetchSize()];
-//            while (resultSet.next()) {
-//                // add movie to the array
-//                movies[resultSet.getRow()] = new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
-//                        resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
-//                        resultSet.getInt("Duration"), resultSet.getInt("CategoryID"), resultSet.getInt("IsAvailable"), resultSet.getInt("Price"));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return movies;
-//    }
-//    // TODO - fix the sql query
-//    protected static Movie[] exportMovieByTitle(String title) {
-//        Movie[] movies = null;
-//        try {
-//            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movie WHERE MovieTitle = ?");
-//            statement.setString(1, title); // Set the value for the first placeholder to the value of the title variable
-//
-//            resultSet = statement.executeQuery();
-//
-//            movies = new Movie[resultSet.getFetchSize()];
-//            while (resultSet.next()) {
-//                // add movie to the array
-//                movies[resultSet.getRow()] = new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
-//                        resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
-//                        resultSet.getInt("Duration"), resultSet.getInt("CategoryID"), resultSet.getBoolean("IsAvailable"), resultSet.getInt("Price"));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return movies;
-//    }
-//    // TODO - fix the sql query
-//    protected static Movie[] exportAllAvilibleMovies() {
-//        Movie[] movies = null;
-//        try {
-//            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movie?");
-//
-//            resultSet = statement.executeQuery("SELECT * FROM movie WHERE IsAvailable = true");
-//
-//            movies = new Movie[resultSet.getFetchSize()];
-//            while (resultSet.next()) {
-//                // add movie to the array
-//                movies[resultSet.getRow()] = new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
-//                        resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
-//                        resultSet.getInt("Duration"), resultSet.getInt("CategoryID"), resultSet.getBoolean("IsAvailable"), resultSet.getInt("Price"));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            // TODO - temp
-//            Movie m = new Movie(1, "title", "description", "releaseDate", 120, 1, true, -1);
-//            return new Movie[]{m};
-//        }
-//        return movies;
-//    }
-//    protected static Movie exportMovieById(int i) {
-//        Movie movie = new Movie();
-//        try {
-//            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movie WHERE MovieID = ?");
-//            statement.setInt(1, i); // Set the value for the first placeholder to the value of the i variable
-//
-//            resultSet = statement.executeQuery();
-//            if (resultSet.next()) {
-//                movie = new Movie(resultSet.getInt("MovieID"), resultSet.getString("MovieTitle"),
-//                        resultSet.getString("Description"), resultSet.getString("ReleaseDate"),
-//                        resultSet.getInt("Duration"), resultSet.getInt("CategoryID"), resultSet.getBoolean("IsAvailable"), resultSet.getInt("Price"));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();}
-//        return movie;
-//    }
-    //    public static Movie getMovieById(int i) {
-//        return Movie.exportMovieById(i);
-//    }
 
     public int getMovieID() {
     return movieID;

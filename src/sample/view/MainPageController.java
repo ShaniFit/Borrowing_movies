@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,7 +13,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,13 +21,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import sample.db.Category;
 import sample.db.Movie;
-import sample.db.User;
+import sample.db.Order;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -55,42 +51,7 @@ public class MainPageController  extends HelloController implements Initializabl
 
     @FXML
     private Button viewOrders;
-// TODO - UI - shir - fix the problem that before searching we can select movie
-    private void AAAAloadMoviesByKey() {
-        // Load the movies from the database and display them in movie1, movie2, ..., movie8.
-        // For each movie, set the title, category, and image.
-        // If there are fewer than 8 movies, hide the remaining movie panes.
-        // get user choice
-        Movie m  = new Movie();
-        String choice = choiceAll.getSelectionModel().getSelectedItem();
-        Movie[] movies;
 
-        switch (choice) {
-            case "Title":
-                System.out.println(searchWord.getText());
-                movies = m.exportMovieByTitle(searchWord.getText());
-            case "Category":
-                Category c = new Category();
-                Category category = c.getCategoryByName(searchWord.getText());
-                movies = m.exportMovieByCategory(searchWord.getText());
-            case "Duration":
-                movies = m.exportMovieByDuration(searchWord.getText());
-            case "All":
-                movies = m.exportMovie();
-            }
-
-        // TODO - UI - Load the movies into the UI - 8 movies
-//        title1.setText("movies[0].getMovieTitle()");
-//        for (int i = 0; i < movies.length; i++) {
-//            AnchorPane movie = (AnchorPane) movie2.getParent().getChildrenUnmodifiable().get(i);
-//            ImageView image = (ImageView) movie.getChildren().get(0);
-//            Label title = (Label) movie.getChildren().get(1);
-//            Label category = (Label) movie.getChildren().get(2);
-////            image.setImage(movies[i].getImage());
-//            title.setText(movies[i].getMovieTitle());
-////            category.setText(movies[i].getCategory());
-//        }
-    }
     @FXML
     void pressViewOrders(ActionEvent event) {
         handleNextScreenButton("resources/ordersView.fxml");
@@ -122,9 +83,9 @@ public class MainPageController  extends HelloController implements Initializabl
 
         if (selectedMovie != null) {
             System.out.println("Clicked on " + selectedMovie.getMovieTitle());
-            createScreen(2,4,"resources/movieOrder.fxml",false);
+            createScreen(2,4,"resources/movieOrder.fxml",false,null);
         }
-        createScreen(2,4,"resources/movieSearch.fxml",true);
+        createScreen(2,4,"resources/movieSearch.fxml",true,null);
 
         if (!isAdmin) {
             addMovie.setVisible(false);
@@ -134,38 +95,59 @@ public class MainPageController  extends HelloController implements Initializabl
         choiceAll.setValue("All");
     }
 
-    protected void createScreen(int rows, int cols, String toMove, boolean hasImage){
+    protected void createScreen(int rows, int cols, String toMove, boolean isMovie, Movie[] filterdMovies){
         // movie grid
-        Movie[] movies;
+        Movie[] movies = null;
+        Order[] orders = null;
+        Order o = new Order();
         Movie m  = new Movie();
-        movies = m.exportMovie();
-        int movieNum=0;
+        AnchorPane newPane;
+        if (isMovie){
+            if (filterdMovies==null){
+                movies = m.exportMovie();
+            }
+            else{
+                movies = filterdMovies;
+            }
+        }
+        else{
+            if (currentUser.isAdmin()) {
+                orders = o.exportOrders();
+            }
+            else{
+            orders= o.exportSpesificOrder(currentUser.getId());
+            }
+        }
+        int counter=0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                AnchorPane newPane = createAnchorPane(hasImage,movies[movieNum],toMove);
-                grid.setVgap(10);
-                grid.add(newPane, j, i);
-                movieNum++;
+                if (movies!=null && counter < movies.length) {
+                    newPane = createAnchorPane(isMovie,movies[counter],toMove, null);
+                    grid.setVgap(10);
+                    grid.add(newPane, j, i);
+                }
+                else if(orders!=null && counter < orders.length){
+                    newPane = createAnchorPane(isMovie,null,toMove, orders[counter]);
+                    grid.setVgap(10);
+                    grid.add(newPane, j, i);
+                }
+                counter++;
+
             }
         }
     }
 
-    private AnchorPane createAnchorPane(boolean hasImage, Movie movie, String toMove) {
+    private AnchorPane createAnchorPane(boolean isMovie, Movie movie, String toMove, Order order) {
         AnchorPane anchorPane = new AnchorPane();
-        System.out.println(movie.getMovieTitle());
-        Label title= createLabel(movie.getMovieTitle());
-        Label category= createLabel(movie.getCategory());
-        Label orderId= createLabel(Integer.toString(selectedOrder.getOrderID()));
-        Label userName= createLabel(currentUser.getUserName());
-        Label price = createLabel(Integer.toString(movie.getPrice()));
-        Label returnDate=createLabel(selectedOrder.getDate());
-
-
         VBox vbox = new VBox(5);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(5);
-
-        if(hasImage) {
+        String nextPage;
+        Movie m = new Movie();
+        if (isMovie) {
+            nextPage = "resources/movieOrder.fxml";
+            Label title = createLabel(movie.getMovieTitle());
+            Label category = createLabel(movie.getCategory());
             Image image = new Image(getClass().getResourceAsStream(movie.getImagePath()));
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(300); // image size
@@ -174,25 +156,35 @@ public class MainPageController  extends HelloController implements Initializabl
             vbox.getChildren().addAll(imageView, title, category);
         }
         else {
+            m.exportMovieById(order.getMovieID());
+            Label userName = createLabel(Integer.toString(order.getUserID()));
+            Label price = createLabel(Integer.toString(m.getPrice()));
+            Label returnDate = createLabel(order.getDate());
+            Label orderId = createLabel(Integer.toString(order.getOrderID()));
+            Label movieTitle = createLabel(m.getMovieTitle());
+            nextPage = "resources/mainPage.fxml";
+
             vbox.setPadding(new Insets(10)); // ריווח פנימי
             vbox.setBorder(new Border(new BorderStroke(
                     Color.WHITE,
                     BorderStrokeStyle.SOLID,
                     new CornerRadii(5),
                     new BorderWidths(2))));
-            vbox.getChildren().addAll(orderId,userName, title, price,returnDate);
+            vbox.getChildren().addAll(orderId,userName, price, movieTitle);
         }
 
         // Add click event to the AnchorPane
         anchorPane.setOnMouseClicked(event -> {
             try {
-                selectedMovie = movie;
-                // Load the next scene
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("resources/movieOrder.fxml"));
-                Parent root = fxmlLoader.load();
-                Stage stage = (Stage) anchorPane.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show();
+                if (isMovie) {
+                    selectedMovie = movie;
+                    // Load the next scene
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(nextPage));
+                    Parent root = fxmlLoader.load();
+                    Stage stage = (Stage) anchorPane.getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

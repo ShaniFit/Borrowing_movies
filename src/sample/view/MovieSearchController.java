@@ -24,37 +24,26 @@ public class MovieSearchController extends MainPageController{
     }
     @FXML
     void enterHome(MouseEvent event) {
-        handleNextScreenButton("mainPage.fxml");
+        handleNextScreenButton("resources/mainPage.fxml");
     }
-    private void loadMoviesByKey() {
-        // Load the movies from the database and display them in movie1, movie2, ..., movie8.
-        // For each movie, set the title, category, and image.
-        // If there are fewer than 8 movies, hide the remaining movie panes.
-        // get user choice
+    private Movie[] loadMoviesByKey() {
         Movie m  = new Movie();
-        Movie[] movies = new Movie[8];
-
-        switch (userSearchFilter) {
-            case "Title":
-                System.out.println(userSearchWord);
-                movies = m.exportMovieByTitle(userSearchWord);
-            case "Category":
-                movies = m.exportMovieByCategory(userSearchWord);
-            case "Duration":
-                movies = m.exportMovieByDuration(userSearchWord);
-            case "All":
-                movies = m.exportMovie();
-
+        Movie[] movies = null;
+        // TODO  fix those export methods
+        if(userSearchFilter.equals("Category")){
+            movies = m.exportMovieByCategory(userSearchWord);
+        } else if (userSearchFilter.equals("Title")){
+            movies = m.exportMovieByTitle(userSearchWord);
+        } else if (userSearchFilter.equals("Duration")){
+            movies = m.exportMovieByDuration(userSearchWord);
+        } else {
+            movies = m.exportMovie();
         }
-        // TODO - UI - shir - Load the movies into the UI
-//        title1.setText(movies[0].getMovieTitle());
-//        category1.setText(movies[0].getCategory());
-//        Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
-//        image1.setImage(initialImage);
+        return movies;
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        loadMoviesByKey();//?
-        createScreen(1,4, "resources/movieOrder.fxml",true);
+        Movie[] movies = loadMoviesByKey();//?
+        createScreen(1,4, "resources/movieOrder.fxml",true, movies);
     }
 }

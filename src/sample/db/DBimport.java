@@ -130,9 +130,17 @@ public class DBimport {
      * */
     public Order[] exportOrders() {
         Order[] orders = null;
+        ResultSet r;
+        int count = 0;
+        String statem = "select * from project.order";
         try {
+            r = statement.executeQuery(statem);
+            while (r.next()) {
+                count++;
+            }
+            orders = new Order[count];
             //insert the data into resultSet object
-            resultSet = statement.executeQuery("select * from project.order");
+            resultSet = statement.executeQuery(statem);
             //print from the resultSet object to the app
             orders = new Order[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
@@ -145,17 +153,24 @@ public class DBimport {
         }
         return orders;
     }
-    public Order[] exportSpesificOrder(int orderID) {
+    public Order[] exportSpesificOrder(int userId) {
         Order[] orders = null;
+        ResultSet r;
+        int count = 0;
+        String statem = "SELECT * FROM project.order WHERE ID ="+userId;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM project.order WHERE orderID = ?");//
-            statement.setInt(1, orderID); // Set the value for the first placeholder to the value of the userName variable
+            r = statement.executeQuery(statem);
+            while (r.next()) {
+                count++;
+            }
+            orders = new Order[count];
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM project.order WHERE ID = ?");//
+            statement.setInt(1, userId); // Set the value for the first placeholder to the value of the userName variable
 
             resultSet = statement.executeQuery();
-            orders = new Order[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
                 // add order to the array
-                if (resultSet.getInt("orderID") == orderID) {
+                if (resultSet.getInt("ID") == userId) {
                     orders[resultSet.getRow()-1] = new Order(resultSet.getInt("orderID"), resultSet.getInt("totalPrice"),
                             resultSet.getString("orderDate"), resultSet.getInt("ID"),
                             resultSet.getInt("movieID"));
@@ -215,7 +230,6 @@ public class DBimport {
             while (r.next()) {
                 count++;
             }
-            System.out.println(count);
             movies = new Movie[count];
             resultSet = statement.executeQuery("select * from movie");
             while (resultSet.next()) {
@@ -226,31 +240,30 @@ public class DBimport {
         }
         return movies;
     }
-    public Movie[] BRexportMovie() {
-        Movie[] movies = null;
+    public Movie exportMovieById(int movieId) {
+        Movie movie = null;
         try {
-            resultSet = statement.executeQuery("select * from movie");
+            resultSet = statement.executeQuery("select * from movie WHERE MovieID ="+movieId);
 
 
-            movies = new Movie[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
-                movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
+                movie = resultSetToMovie(resultSet);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return movies;
+        return movie;
     }
-    public Movie[] exportMovieByCategory(String categoryName) {
+    public Movie[] exportMovieByCategory(int categoryId) {
         Movie[] movies = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movie WHERE CategoryName = ?");//
-            statement.setString(1, categoryName); // Set the value for the first placeholder to the value of the userName variable
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movie WHERE categoryID = ?");//
+            statement.setInt(1, categoryId); // Set the value for the first placeholder to the value of the userName variable
             resultSet = statement.executeQuery();
             movies = new Movie[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
                 // add movie to the array is the movie available
-                if (resultSet.getString("CategoryName").equals(categoryName)) {
+                if (resultSet.getString("categoryID").equals(categoryId)) {
                     movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
                 }
             }
@@ -340,7 +353,7 @@ public class DBimport {
         Category category = null;
         try {
             //Exporting the data by movieID
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM category WHERE CategoryName = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM category WHERE CategoryName = "+categoryName);
             statement.setString(1, categoryName); // Set the value for the first placeholder to the value of the userName variable
 
             resultSet = statement.executeQuery();

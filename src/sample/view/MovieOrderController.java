@@ -14,7 +14,6 @@ import sample.db.Order;
 
 public class MovieOrderController extends HelloController {
 
-    private int movieId;
 
     @FXML
     private Label categoryLabel;
@@ -62,7 +61,7 @@ public class MovieOrderController extends HelloController {
         selectedMovie.updateIsAvilable(0);
         // TODO - shani check this
 
-        handleNextScreenButton("endOrder.fxml");
+        handleNextScreenButton("resources/ordersView.fxml");
     }
     @FXML
     void removePress(ActionEvent event) {
@@ -80,11 +79,11 @@ public class MovieOrderController extends HelloController {
 
     @FXML
     void enterSearch(MouseEvent event) {
-        handleNextScreenButton("movieSearch.fxml");
+        handleNextScreenButton("resources/movieSearch.fxml");
     }
     @FXML
     void enterHome(MouseEvent event) {
-        handleNextScreenButton("mainPage.fxml");
+        handleNextScreenButton("resources/mainPage.fxml");
     }
 
     public void initialize(){
@@ -94,6 +93,7 @@ public class MovieOrderController extends HelloController {
         durationLabel.setText(selectedMovie.getDuration());
         titleLabel.setText(selectedMovie.getMovieTitle());
         price.setText(Integer.toString(selectedMovie.getPrice()));
+        System.out.println("image path: " + selectedMovie.getImagePath());
         Image image = new Image(getClass().getResourceAsStream(selectedMovie.getImagePath()));
         movieImage.setImage(image);
 

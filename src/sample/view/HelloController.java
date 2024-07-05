@@ -21,7 +21,7 @@ public class HelloController{
     protected static Boolean isAdmin;
 
     public static String userSearchWord;
-    public static String userSearchFilter;
+    public static String userSearchFilter = "All";
 
     @FXML
     private TextField emailField;

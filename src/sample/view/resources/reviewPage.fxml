@@ -33,7 +33,7 @@
       </AnchorPane>
       <AnchorPane layoutX="35.0" layoutY="84.0" prefHeight="218.0" prefWidth="265.0" styleClass="body2" stylesheets="@style.css">
          <children>
-            <TextArea layoutX="11.0" layoutY="64.0" prefHeight="148.0" prefWidth="244.0" />
+            <TextArea fx:id="reviewID" layoutX="11.0" layoutY="64.0" prefHeight="148.0" prefWidth="244.0" />
             <Text fill="#f4f2f2" layoutX="15.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How was the movie?" />
             <RadioButton fx:id="rate1" layoutX="132.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRating" />
             <RadioButton fx:id="rate2" layoutX="154.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRating" />
@@ -47,7 +47,7 @@
       <Text fill="#f4f2f2" layoutX="49.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Review:" />
       <ImageView blendMode="LIGHTEN" fitHeight="63.0" fitWidth="71.0" layoutX="598.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@view/resources/logo.jpeg" />
+            <Image url="@logo.jpeg" />
          </image>
       </ImageView>
       <Text fill="#f4f2f2" layoutX="25.0" layoutY="30.0" onMouseClicked="#enterHome" strokeType="OUTSIDE" strokeWidth="0.0" text="Home | ">
@@ -61,5 +61,6 @@
          </font>
       </Text>
       <Button layoutX="667.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#closeButton" text="X" />
+      <Button layoutX="336.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#reviewPress" text="Send" />
    </children>
 </AnchorPane>

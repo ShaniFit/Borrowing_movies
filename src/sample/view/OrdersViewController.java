@@ -1,7 +1,6 @@
 package sample.view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -17,11 +16,11 @@ public class OrdersViewController extends MainPageController {
 
     @FXML
     void enterHome(MouseEvent event) {
-        handleNextScreenButton("mainPage.fxml");
+        handleNextScreenButton("resources/mainPage.fxml");
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        createScreen(3,6, "resources/movieOrder.fxml",false);
+        createScreen(3,6, "resources/ordersView.fxml",false, null);
     }
 }
 

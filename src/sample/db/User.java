@@ -76,8 +76,11 @@ public class User extends DBimport {
     }
 
 
-    public int isAdmin() {
-        return isAdmin;
+    public boolean isAdmin() {
+        if (isAdmin==0)
+            return false;
+        else
+            return true;
     }
 
     public void setAdmin(int admin) {
