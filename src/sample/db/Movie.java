@@ -65,8 +65,8 @@ public class Movie extends DBimport{
 
     public Movie[] exportMovieByCategory(String categoryName)
     {   Category c = new Category();
-        c.getCategoryByName(categoryName);
-        return super.exportMovieByCategory(c.getCategoryID());
+        Category newC = c.getCategoryByName(categoryName);
+        return super.exportMovieByCategory(newC.getCategoryID());
     }
 
     public Movie[] exportMovie()

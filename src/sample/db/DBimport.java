@@ -256,16 +256,20 @@ public class DBimport {
     }
     public Movie[] exportMovieByCategory(int categoryId) {
         Movie[] movies = null;
+        ResultSet r;
+        int count = 0;
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movie WHERE categoryID = ?");//
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM movie WHERE CategoryID = ?");//
             statement.setInt(1, categoryId); // Set the value for the first placeholder to the value of the userName variable
+            r = statement.executeQuery();
+            while (r.next()) {
+                count++;
+            }
+            movies = new Movie[count];
             resultSet = statement.executeQuery();
-            movies = new Movie[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
                 // add movie to the array is the movie available
-                if (resultSet.getString("categoryID").equals(categoryId)) {
                     movies[resultSet.getRow()-1] = resultSetToMovie(resultSet);
-                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -353,7 +357,7 @@ public class DBimport {
         Category category = null;
         try {
             //Exporting the data by movieID
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM category WHERE CategoryName = "+categoryName);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM category WHERE CategoryName = ?");
             statement.setString(1, categoryName); // Set the value for the first placeholder to the value of the userName variable
 
             resultSet = statement.executeQuery();
