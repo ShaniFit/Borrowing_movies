@@ -2,28 +2,27 @@ package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import sample.db.Movie;
 import sample.db.Order;
 
 public class MovieOrderController extends HelloController {
 
-    private int movieId;
 
     @FXML
     private Label categoryLabel;
 
     @FXML
-    private Label categoryLabel11;
+    private Label price;
 
     @FXML
     private Label dateLabel;
-
-    @FXML
-    private Label priceLabel;
 
     @FXML
     private Label descriptionLabel;
@@ -60,26 +59,48 @@ public class MovieOrderController extends HelloController {
         Order order = new Order(-1, selectedMovie.getPrice(), dateLabel.getText(),currentUser.getId(), selectedMovie.getMovieID());
         order.addNewOrderToDB();
         selectedMovie.updateIsAvilable(0);
-        // TODO - shani check this
+        handleNextScreenButton("resources/endOrder.fxml");
     }
     @FXML
     void removePress(ActionEvent event) {
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Remove movie");
+        alert.setHeaderText(null);
+        alert.setContentText("Movie removed successfully!");
+        alert.showAndWait();
     }
 
     @FXML
     void reviewPress(ActionEvent event) {
-
         handleNextScreenButton("resources/reviewPage.fxml");
     }
 
+    @FXML
+    void enterSearch(MouseEvent event) {
+        handleNextScreenButton("resources/movieSearch.fxml");
+    }
+    @FXML
+    void enterHome(MouseEvent event) {
+        handleNextScreenButton("resources/mainPage.fxml");
+    }
+
     public void initialize(){
-        // TODO - UI - shir - load movie details into fxml use selectedMovie.
-        if(isAdmin){
+        categoryLabel.setText(selectedMovie.getCategory());
+        dateLabel.setText(selectedMovie.getReleaseDate());
+        descriptionLabel.setText(selectedMovie.getDescription());
+        durationLabel.setText(selectedMovie.getDuration());
+        titleLabel.setText(selectedMovie.getMovieTitle());
+        price.setText(Integer.toString(selectedMovie.getPrice()));
+        System.out.println("image path: " + selectedMovie.getImagePath());
+        Image image = new Image(getClass().getResourceAsStream(selectedMovie.getImagePath()));
+        movieImage.setImage(image);
+
+        if(currentUser.isAdmin()){
             order.setVisible(false);
             orderButton.setVisible(false);
             reviewButton.setVisible(false);
             reviewText.setVisible(false);
+
         }
         else{
             remove.setVisible(false);

@@ -14,7 +14,10 @@ public class Category extends DBimport {
         }
         this.categoryName = categoryName;
     }
-    public Category(){ }
+    public Category(){
+        this.categoryID = -1;
+        this.categoryName = "";
+    }
     public void addNewCatogoryToDB()
     {
         try {
@@ -36,6 +39,9 @@ public class Category extends DBimport {
     //Given category id and returns the object of the id
     protected Category getCategoryByID(int categoryID) {
         Category c = exportSpesificCategory(categoryID);
+        if(c == null) {
+            return new Category();
+        }
         return c;
     }
     protected Category[] getCategories(int categoryID) {

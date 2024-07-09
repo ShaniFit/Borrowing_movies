@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.db.Movie;
+import sample.db.Order;
 import sample.db.User;
 
 
@@ -16,10 +17,9 @@ public class HelloController{
 
     public static User currentUser;
     public static Movie selectedMovie;
-    protected static Boolean isAdmin;
-
+    public static Order selectedOrder = new Order();
     public static String userSearchWord;
-    public static String userSearchFilter;
+    public static String userSearchFilter = "All";
 
     @FXML
     private TextField emailField;
@@ -38,11 +38,14 @@ public class HelloController{
 
     @FXML
     private TextField usernameRegister;
+
+
     @FXML
     void closeButton(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
+
     @FXML
     void pressRegister(ActionEvent event) {
         String email = emailField.getText();
@@ -87,7 +90,6 @@ public class HelloController{
     void pressLogin(ActionEvent event) {
         String username = usernameLogin.getText();
         String password = passwordLogin.getText();
-        isAdmin=false;
         currentUser = new User();
         currentUser = currentUser.login(username, password);
         if (currentUser != null) {

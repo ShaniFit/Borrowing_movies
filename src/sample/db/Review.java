@@ -1,5 +1,7 @@
 package sample.db;
 
+import java.util.Random;
+
 public class Review extends DBimport {
 
     private int reviewID;
@@ -9,7 +11,12 @@ public class Review extends DBimport {
     private int movieID;
 
     public Review(int reviewID, int rating, String text, int userID, int movieID) {
-        this.reviewID = reviewID;
+        if (reviewID == -1) {
+            Random rand = new Random();
+            this.reviewID = rand.nextInt(9999);
+        } else {
+            this.reviewID = reviewID;
+        }
         this.rating = rating;
         this.text = text;
         this.userID = userID;

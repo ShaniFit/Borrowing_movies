@@ -2,11 +2,18 @@ package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,12 +23,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import sample.db.Category;
+import javafx.scene.paint.Color;
 import sample.db.Movie;
-import sample.db.User;
-
+import sample.db.Order;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 public class MainPageController  extends HelloController implements Initializable {
+
+
+
+
+    @FXML
+    private AnchorPane rootAnchor;
 
     @FXML
     private ChoiceBox<String> choiceAll;
@@ -30,147 +44,14 @@ public class MainPageController  extends HelloController implements Initializabl
     private TextField searchWord;
 
     @FXML
-    private AnchorPane movie2;
-
-    @FXML
-    private AnchorPane movie3;
-
-    @FXML
-    private AnchorPane movie4;
-
-    @FXML
-    private AnchorPane movie5;
-
-    @FXML
-    private AnchorPane movie6;
-
-    @FXML
-    private AnchorPane movie7;
-
-    @FXML
-    private AnchorPane movie8;
-
-    @FXML
-    private ImageView image1;
-
-    @FXML
-    private ImageView image2;
-
-    @FXML
-    private ImageView image3;
-
-    @FXML
-    private ImageView image4;
-
-    @FXML
-    private ImageView image5;
-
-    @FXML
-    private ImageView image6;
-
-    @FXML
-    private ImageView image7;
-
-    @FXML
-    private ImageView image8;
-    @FXML
-    private Label title1;
-
-    @FXML
-    private Label title2;
-
-    @FXML
-    private Label title3;
-
-    @FXML
-    private Label title4;
-
-    @FXML
-    private Label title5;
-
-    @FXML
-    private Label title6;
-
-    @FXML
-    private Label title7;
-
-    @FXML
-    private Label title8;
-    @FXML
-    private Label category1;
-
-    @FXML
-    private Label category2;
-
-    @FXML
-    private Label category3;
-
-    @FXML
-    private Label category4;
-
-    @FXML
-    private Label category5;
-
-    @FXML
-    private Label category6;
-
-    @FXML
-    private Label category7;
-
-    @FXML
-    private Label category8;
+    private GridPane grid;
 
     @FXML
     private Button addMovie;
 
     @FXML
     private Button viewOrders;
-// TODO - UI - shir - fix the problem that before searching we can select movie
-    private void loadMoviesByKey() {
-        // Load the movies from the database and display them in movie1, movie2, ..., movie8.
-        // For each movie, set the title, category, and image.
-        // If there are fewer than 8 movies, hide the remaining movie panes.
-        // get user choice
-        Movie m  = new Movie();
-        String choice = choiceAll.getSelectionModel().getSelectedItem();
-        Movie[] movies;
 
-        switch (choice) {
-            case "Title":
-                System.out.println(searchWord.getText());
-                movies = m.exportMovieByTitle(searchWord.getText());
-            case "Category":
-                Category c = new Category();
-                Category category = c.getCategoryByName(searchWord.getText());
-                movies = m.exportMovieByCategory(searchWord.getText());
-            case "Duration":
-                movies = m.exportMovieByDuration(searchWord.getText());
-            case "All":
-                movies = m.exportMovie();
-            }
-
-        // TODO - UI - Load the movies into the UI - 8 movies
-        title1.setText("movies[0].getMovieTitle()");
-//        for (int i = 0; i < movies.length; i++) {
-//            AnchorPane movie = (AnchorPane) movie2.getParent().getChildrenUnmodifiable().get(i);
-//            ImageView image = (ImageView) movie.getChildren().get(0);
-//            Label title = (Label) movie.getChildren().get(1);
-//            Label category = (Label) movie.getChildren().get(2);
-////            image.setImage(movies[i].getImage());
-//            title.setText(movies[i].getMovieTitle());
-////            category.setText(movies[i].getCategory());
-//        }
-    }
-    private void loadMovies(){
-        Movie[] movies;
-        Movie m  = new Movie();
-        movies = m.exportMovie();
-        title1.setText(movies[0].getMovieTitle());
-        category1.setText(movies[0].getCategory());
-        Image initialImage = new Image(getClass().getResourceAsStream(movies[0].getImagePath()));
-        image1.setImage(initialImage);
-        // TODO - UI - shir - Load the movies into the UI - 8 movies,
-    }
     @FXML
     void pressViewOrders(ActionEvent event) {
         handleNextScreenButton("resources/ordersView.fxml");
@@ -199,13 +80,129 @@ public class MainPageController  extends HelloController implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if(!isAdmin) {
+
+        if (selectedMovie != null) {
+            System.out.println("Clicked on " + selectedMovie.getMovieTitle());
+            createScreen(2,4,"resources/movieOrder.fxml",false,null);
+        }
+        createScreen(2,4,"resources/movieSearch.fxml",true,null);
+
+        if (!currentUser.isAdmin()) {
             addMovie.setVisible(false);
             viewOrders.setVisible(false);
         }
         choiceAll.getItems().addAll(choice);
         choiceAll.setValue("All");
-        loadMovies();
     }
 
+    protected void createScreen(int rows, int cols, String toMove, boolean isMovie, Movie[] filterdMovies){
+        // movie grid
+        Movie[] movies = null;
+        Order[] orders = null;
+        Order o = new Order();
+        Movie m  = new Movie();
+        AnchorPane newPane;
+        if (isMovie){
+            if (filterdMovies==null){
+                movies = m.exportMovie();
+            }
+            else{
+                movies = filterdMovies;
+            }
+        }
+        else{
+            if (currentUser.isAdmin()) {
+                orders = o.exportOrders();
+            }
+            else{
+            orders= o.exportSpesificOrder(currentUser.getId());
+            }
+        }
+        int counter=0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (movies!=null && counter < movies.length) {
+                    newPane = createAnchorPane(isMovie,movies[counter],toMove, null);
+                    grid.setVgap(10);
+                    grid.add(newPane, j, i);
+                }
+                else if(orders!=null && counter < orders.length){
+                    newPane = createAnchorPane(isMovie,null,toMove, orders[counter]);
+                    grid.setVgap(10);
+                    grid.add(newPane, j, i);
+                }
+                counter++;
+
+            }
+        }
+    }
+
+    private AnchorPane createAnchorPane(boolean isMovie, Movie movie, String toMove, Order order) {
+        AnchorPane anchorPane = new AnchorPane();
+        VBox vbox = new VBox(5);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(5);
+        String nextPage;
+        Movie m = new Movie();
+        if (isMovie) {
+            nextPage = "resources/movieOrder.fxml";
+            Label title = createLabel(movie.getMovieTitle());
+            Label category = createLabel(movie.getCategory());
+            Image image = new Image(getClass().getResourceAsStream(movie.getImagePath()));
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(300); // image size
+            imageView.setFitHeight(250);
+            imageView.setPreserveRatio(true);
+            vbox.getChildren().addAll(imageView, title, category);
+        }
+        else {
+            Movie orderd_movie = m.exportMovieById(order.getMovieID());
+            Label userName = createLabel("User id: " + order.getUserID());
+            Label price = createLabel("Price: "+ m.getPrice());
+            Label returnDate = createLabel("Date:" + order.getDate());
+            Label orderId = createLabel("Order id: " + order.getOrderID());
+            Label movieTitle = createLabel("Movie: "+ orderd_movie.getMovieTitle());
+            nextPage = "resources/mainPage.fxml";
+
+            vbox.setPadding(new Insets(10)); // ריווח פנימי
+            vbox.setBorder(new Border(new BorderStroke(
+                    Color.WHITE,
+                    BorderStrokeStyle.SOLID,
+                    new CornerRadii(5),
+                    new BorderWidths(2))));
+            vbox.getChildren().addAll(orderId,userName, price, movieTitle);
+        }
+
+        // Add click event to the AnchorPane
+        anchorPane.setOnMouseClicked(event -> {
+            try {
+                if (isMovie) {
+                    selectedMovie = movie;
+                    // Load the next scene
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(nextPage));
+                    Parent root = fxmlLoader.load();
+                    Stage stage = (Stage) anchorPane.getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        anchorPane.getChildren().add(vbox);
+        //place the anchor in vbox
+        AnchorPane.setTopAnchor(vbox, 10.0);
+        AnchorPane.setLeftAnchor(vbox, 10.0);
+        AnchorPane.setRightAnchor(vbox, 10.0);
+        AnchorPane.setBottomAnchor(vbox, 10.0);
+
+
+        return anchorPane;
+    }
+
+    private Label createLabel(String str){
+        Label label = new Label(str);
+        label.setStyle("-fx-text-fill: white;");
+        return label;
+    }
 }

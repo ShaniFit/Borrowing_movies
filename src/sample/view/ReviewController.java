@@ -2,11 +2,13 @@ package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.ToggleGroup;
-import sample.db.Movie;
+import javafx.scene.input.MouseEvent;
 import sample.db.Review;
 
 
@@ -18,8 +20,8 @@ public class ReviewController extends HelloController {
     @FXML
     private Label dateLabel;
 
-    @FXML
-    private Label descriptionLabel;
+//    @FXML
+//    private Label descriptionLabel;
 
     @FXML
     private Label durationLabel;
@@ -41,19 +43,27 @@ public class ReviewController extends HelloController {
 
     @FXML
     private RadioButton rate5;
-
+    @FXML
+    private TextArea reviewID;
     private int rate = 0;
 
     @FXML
     private Label titleLabel;
 
     void setMovieReview(){
-        // TODO - UI - shir - insert the real review form the ui into thr text.
-        Review review = new Review(-1,rate, "This movie is great", currentUser.getId(), selectedMovie.getMovieID());
+        Review review = new Review(-1,rate, reviewID.getText(), currentUser.getId(), selectedMovie.getMovieID());
         review.insertNewReview();
         handleNextScreenButton("resources/mainPage.fxml");
     }
+    @FXML
+    void reviewPress(MouseEvent event) {
+        setMovieReview();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Review");
+        alert.setContentText("Thank you for your review!");
+        alert.showAndWait();
 
+    }
     @FXML
     void handleRating(ActionEvent event) {
         if (rate1.isSelected()){
@@ -83,5 +93,18 @@ public class ReviewController extends HelloController {
         }
     }
 
- // TODO - UI - shir - add  submit button  and creat function for that. use "setMovieReview" function for that.
+    @FXML
+    void enterHome(MouseEvent event) {
+        handleNextScreenButton("resources/mainPage.fxml");
+    }
+
+    public void initialize(){
+        categoryLabel.setText(selectedMovie.getCategory());
+        dateLabel.setText(selectedMovie.getReleaseDate());
+//        descriptionLabel.setText(selectedMovie.getDescription());
+        durationLabel.setText(selectedMovie.getDuration());
+        titleLabel.setText(selectedMovie.getMovieTitle());
+        Image image = new Image(getClass().getResourceAsStream(selectedMovie.getImagePath()));
+        movieImage.setImage(image);
+    }
 }
