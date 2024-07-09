@@ -142,7 +142,6 @@ public class DBimport {
             //insert the data into resultSet object
             resultSet = statement.executeQuery(statem);
             //print from the resultSet object to the app
-            orders = new Order[resultSet.getFetchSize()+1];
             while (resultSet.next()) {
                 orders[resultSet.getRow()-1] = new Order(resultSet.getInt("orderID"), resultSet.getInt("totalPrice"),
                         resultSet.getString("orderDate"), resultSet.getInt("ID"),

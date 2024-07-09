@@ -87,7 +87,7 @@ public class MainPageController  extends HelloController implements Initializabl
         }
         createScreen(2,4,"resources/movieSearch.fxml",true,null);
 
-        if (!isAdmin) {
+        if (!currentUser.isAdmin()) {
             addMovie.setVisible(false);
             viewOrders.setVisible(false);
         }
@@ -156,12 +156,12 @@ public class MainPageController  extends HelloController implements Initializabl
             vbox.getChildren().addAll(imageView, title, category);
         }
         else {
-            m.exportMovieById(order.getMovieID());
-            Label userName = createLabel(Integer.toString(order.getUserID()));
-            Label price = createLabel(Integer.toString(m.getPrice()));
-            Label returnDate = createLabel(order.getDate());
-            Label orderId = createLabel(Integer.toString(order.getOrderID()));
-            Label movieTitle = createLabel(m.getMovieTitle());
+            Movie orderd_movie = m.exportMovieById(order.getMovieID());
+            Label userName = createLabel("User id: " + order.getUserID());
+            Label price = createLabel("Price: "+ m.getPrice());
+            Label returnDate = createLabel("Date:" + order.getDate());
+            Label orderId = createLabel("Order id: " + order.getOrderID());
+            Label movieTitle = createLabel("Movie: "+ orderd_movie.getMovieTitle());
             nextPage = "resources/mainPage.fxml";
 
             vbox.setPadding(new Insets(10)); // ריווח פנימי

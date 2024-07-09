@@ -59,9 +59,7 @@ public class MovieOrderController extends HelloController {
         Order order = new Order(-1, selectedMovie.getPrice(), dateLabel.getText(),currentUser.getId(), selectedMovie.getMovieID());
         order.addNewOrderToDB();
         selectedMovie.updateIsAvilable(0);
-        // TODO - shani check this
-
-        handleNextScreenButton("resources/ordersView.fxml");
+        handleNextScreenButton("resources/endOrder.fxml");
     }
     @FXML
     void removePress(ActionEvent event) {
@@ -97,7 +95,7 @@ public class MovieOrderController extends HelloController {
         Image image = new Image(getClass().getResourceAsStream(selectedMovie.getImagePath()));
         movieImage.setImage(image);
 
-        if(isAdmin){
+        if(currentUser.isAdmin()){
             order.setVisible(false);
             orderButton.setVisible(false);
             reviewButton.setVisible(false);

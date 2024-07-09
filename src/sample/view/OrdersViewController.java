@@ -20,7 +20,7 @@ public class OrdersViewController extends MainPageController {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        createScreen(3,6, "resources/ordersView.fxml",false, null);
+        createScreen(3,4, "resources/ordersView.fxml",false, null);
     }
 }
 

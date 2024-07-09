@@ -20,8 +20,8 @@ public class ReviewController extends HelloController {
     @FXML
     private Label dateLabel;
 
-    @FXML
-    private Label descriptionLabel;
+//    @FXML
+//    private Label descriptionLabel;
 
     @FXML
     private Label durationLabel;
@@ -101,7 +101,7 @@ public class ReviewController extends HelloController {
     public void initialize(){
         categoryLabel.setText(selectedMovie.getCategory());
         dateLabel.setText(selectedMovie.getReleaseDate());
-        descriptionLabel.setText(selectedMovie.getDescription());
+//        descriptionLabel.setText(selectedMovie.getDescription());
         durationLabel.setText(selectedMovie.getDuration());
         titleLabel.setText(selectedMovie.getMovieTitle());
         Image image = new Image(getClass().getResourceAsStream(selectedMovie.getImagePath()));

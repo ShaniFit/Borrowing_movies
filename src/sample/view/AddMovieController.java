@@ -76,9 +76,7 @@ public class AddMovieController extends HelloController {
         alert.setTitle("Add movie");
         alert.setHeaderText(null);
         alert.setContentText("Movie added successfully!");
-
         alert.showAndWait();
-
         handleNextScreenButton("resources/mainPage.fxml");
     }
 

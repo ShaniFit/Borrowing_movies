@@ -18,8 +18,6 @@ public class HelloController{
     public static User currentUser;
     public static Movie selectedMovie;
     public static Order selectedOrder = new Order();
-    protected static Boolean isAdmin;
-
     public static String userSearchWord;
     public static String userSearchFilter = "All";
 
@@ -92,7 +90,6 @@ public class HelloController{
     void pressLogin(ActionEvent event) {
         String username = usernameLogin.getText();
         String password = passwordLogin.getText();
-        isAdmin=false;
         currentUser = new User();
         currentUser = currentUser.login(username, password);
         if (currentUser != null) {
