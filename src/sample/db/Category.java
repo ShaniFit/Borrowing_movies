@@ -18,6 +18,10 @@ public class Category extends DBimport {
         this.categoryID = -1;
         this.categoryName = "";
     }
+
+    /**
+     * Add new category to the database
+     */
     public void addNewCatogoryToDB()
     {
         try {
@@ -27,16 +31,10 @@ public class Category extends DBimport {
             e.printStackTrace();
         }
     }
-    public void newCategory()
-    {
-        try {
-            insertNewCategory(this.categoryID, this.categoryName);
-            System.out.println("add successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    //Given category id and returns the object of the id
+
+    /**
+     * Given category id and returns the object of the id
+     */
     protected Category getCategoryByID(int categoryID) {
         Category c = exportSpesificCategory(categoryID);
         if(c == null) {
@@ -44,17 +42,6 @@ public class Category extends DBimport {
         }
         return c;
     }
-    protected Category[] getCategories(int categoryID) {
-        return exportCategory();
-    }
-    public int catgtoryNameToCategoryID(String categoryName) {
-        Category category = getCategoryByName(categoryName);
-        if (category == null) {
-            return -1;
-        }
-        return category.getCategoryID();
-    }
-
     public int getCategoryID() {
         return categoryID;
     }

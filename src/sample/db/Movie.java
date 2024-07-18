@@ -145,9 +145,6 @@ public class Movie extends DBimport{
         return "resources/movie_images/" +movieID+".jpeg";
     }
 
-    public void updateMovieInDB() {
-        // TODO - update the movie in the db
-    }
     public void updateIsAvilable(int isAvilable)
     {
         this.isAvailable = isAvilable;

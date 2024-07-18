@@ -31,53 +31,7 @@ public class DBimport {
             System.out.println(e);
         }
     }
-
-    public void deleteReview(int reviewID, int movieID, int userID) {
-        try {
-            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE ReviewID = ? AND MovieID = ? AND UserID = ?;");
-            st.setInt(1, reviewID);
-            st.setInt(2, movieID);
-            st.setInt(3, userID);
-            st.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public void deleteOreder(int orderID, int movieID, int userID) {
-        try {
-            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE OrderID = ? AND MovieID = ? AND UserID = ?;");
-            st.setInt(1, orderID);
-            st.setInt(2, movieID);
-            st.setInt(3, userID);
-            st.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public void deleteMovie(int movieID, int categoryID) {
-        try {
-            PreparedStatement st = connection.prepareStatement("DELETE FROM review WHERE MovieID = ? AND categoryID = ?;");
-            st.setInt(1, movieID);
-            st.setInt(2, categoryID);
-            st.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public void deleteCategory(int categoryID) {
-        try {
-            PreparedStatement st = connection.prepareStatement("DELETE FROM user WHERE CategoryID = ?");
-            st.setInt(1, categoryID);
-            st.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    /*
+    /**
      * Those insert funcion, inserts to the dataBase the data
      * */
     public void insertNewReview(int reviewID, int rating, String text, int userID, int movieID) {
@@ -88,7 +42,14 @@ public class DBimport {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Insert new user to the database
+     * @param id - the id of the user
+     * @param userName - the name of the user
+     * @param passward - the password of the user
+     * @param isAdmin - if the user is admin or not
+    *
+    * */
     public void insertNewUser(int id, String userName, String passward, int isAdmin) {
         try {
             statement.executeUpdate("INSERT INTO user " + "VALUES ('" + id + "','" + userName + "','" + passward + "','" + isAdmin + "')");
@@ -97,6 +58,17 @@ public class DBimport {
         }
         System.out.println("add successfully");
     }
+    /**
+     * Insert new user to the database
+     *
+     * @param orderID - the id of the order
+     * @param totalPrice - the total price of the order
+     * @param orderDate - the date of the order
+     * @param ID - the id of the user
+     * @param movieID - the id of the movie
+     *
+     */
+
     public void insertNewOrder(int orderID, int totalPrice, String orderDate,int ID, int movieID) {
         try {
             statement.executeUpdate("INSERT INTO project.order " + "VALUES ('" + orderID   +  "','" + totalPrice + "','" + orderDate  + "','" + ID + "','" + movieID + "')");
